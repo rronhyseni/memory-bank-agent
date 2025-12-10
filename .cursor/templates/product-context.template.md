@@ -1,0 +1,145 @@
+# Product Context
+
+## Why This Project Exists
+
+{{PRODUCT_NAME}} addresses {{CORE_PROBLEM_STATEMENT}}.
+
+The platform bridges these critical needs:
+
+1. **{{USER_TYPE_1}}** need {{USER_TYPE_1_NEED}}
+
+2. **{{USER_TYPE_2}}** need {{USER_TYPE_2_NEED}}
+
+3. **{{USER_TYPE_3}}** need {{USER_TYPE_3_NEED}}
+
+## Problems Solved
+
+### For {{USER_TYPE_1}}
+
+**Problem**: {{USER_TYPE_1_PROBLEM}}
+
+**Solution**: {{USER_TYPE_1_SOLUTION_INTRO}}:
+
+- {{SOLUTION_POINT_1}}
+- {{SOLUTION_POINT_2}}
+- {{SOLUTION_POINT_3}}
+
+### For {{USER_TYPE_2}}
+
+**Problem**: {{USER_TYPE_2_PROBLEM}}
+
+**Solution**: {{USER_TYPE_2_SOLUTION_INTRO}}:
+
+- {{SOLUTION_POINT_1}}
+- {{SOLUTION_POINT_2}}
+- {{SOLUTION_POINT_3}}
+
+### For {{USER_TYPE_3}}
+
+**Problem**: {{USER_TYPE_3_PROBLEM}}
+
+**Solution**: {{USER_TYPE_3_SOLUTION_INTRO}}:
+
+- {{SOLUTION_POINT_1}}
+- {{SOLUTION_POINT_2}}
+- {{SOLUTION_POINT_3}}
+
+## How It Works
+
+### {{USER_TYPE_1}} Journey
+
+1. **{{JOURNEY_STEP_1_NAME}}**
+
+   - {{JOURNEY_STEP_1_ACTION_1}}
+   - {{JOURNEY_STEP_1_ACTION_2}}
+   - {{JOURNEY_STEP_1_ACTION_3}}
+
+2. **{{JOURNEY_STEP_2_NAME}}**
+
+   - {{JOURNEY_STEP_2_ACTION_1}}
+   - {{JOURNEY_STEP_2_ACTION_2}}
+   - {{JOURNEY_STEP_2_ACTION_3}}
+
+3. **{{JOURNEY_STEP_3_NAME}}**
+   - {{JOURNEY_STEP_3_ACTION_1}}
+   - {{JOURNEY_STEP_3_ACTION_2}}
+   - {{JOURNEY_STEP_3_ACTION_3}}
+
+### {{USER_TYPE_2}} Journey
+
+1. **{{JOURNEY_STEP_1_NAME}}**
+
+   - {{JOURNEY_STEP_1_ACTION_1}}
+   - {{JOURNEY_STEP_1_ACTION_2}}
+
+2. **{{JOURNEY_STEP_2_NAME}}**
+
+   - {{JOURNEY_STEP_2_ACTION_1}}
+   - {{JOURNEY_STEP_2_ACTION_2}}
+
+3. **{{JOURNEY_STEP_3_NAME}}**
+   - {{JOURNEY_STEP_3_ACTION_1}}
+   - {{JOURNEY_STEP_3_ACTION_2}}
+
+## User Experience Goals
+
+### For {{USER_TYPE_1}}
+
+- **{{UX_GOAL_1_NAME}}**: {{UX_GOAL_1_DESCRIPTION}}
+- **{{UX_GOAL_2_NAME}}**: {{UX_GOAL_2_DESCRIPTION}}
+- **{{UX_GOAL_3_NAME}}**: {{UX_GOAL_3_DESCRIPTION}}
+
+### For {{USER_TYPE_2}}
+
+- **{{UX_GOAL_1_NAME}}**: {{UX_GOAL_1_DESCRIPTION}}
+- **{{UX_GOAL_2_NAME}}**: {{UX_GOAL_2_DESCRIPTION}}
+- **{{UX_GOAL_3_NAME}}**: {{UX_GOAL_3_DESCRIPTION}}
+
+## Key Features
+
+### {{FEATURE_CATEGORY_1}}
+
+- {{FEATURE_1_DESCRIPTION}}
+- {{FEATURE_2_DESCRIPTION}}
+- {{FEATURE_3_DESCRIPTION}}
+
+### {{FEATURE_CATEGORY_2}}
+
+- {{FEATURE_1_DESCRIPTION}}
+- {{FEATURE_2_DESCRIPTION}}
+- {{FEATURE_3_DESCRIPTION}}
+
+### {{FEATURE_CATEGORY_3}}
+
+- {{FEATURE_1_DESCRIPTION}}
+- {{FEATURE_2_DESCRIPTION}}
+- {{FEATURE_3_DESCRIPTION}}
+
+## Business Model
+
+{{BUSINESS_MODEL_DESCRIPTION}}
+
+### Revenue Streams
+
+- **{{REVENUE_STREAM_1}}**: {{REVENUE_STREAM_1_DESCRIPTION}}
+- **{{REVENUE_STREAM_2}}**: {{REVENUE_STREAM_2_DESCRIPTION}}
+
+## Design Principles
+
+1. **{{PRINCIPLE_1_NAME}}**: {{PRINCIPLE_1_DESCRIPTION}}
+
+2. **{{PRINCIPLE_2_NAME}}**: {{PRINCIPLE_2_DESCRIPTION}}
+
+3. **{{PRINCIPLE_3_NAME}}**: {{PRINCIPLE_3_DESCRIPTION}}
+
+4. **{{PRINCIPLE_4_NAME}}**: {{PRINCIPLE_4_DESCRIPTION}}
+
+5. **{{PRINCIPLE_5_NAME}}**: {{PRINCIPLE_5_DESCRIPTION}}
+
+## Success Metrics
+
+- **{{METRIC_1_NAME}}**: {{METRIC_1_TARGET}}
+- **{{METRIC_2_NAME}}**: {{METRIC_2_TARGET}}
+- **{{METRIC_3_NAME}}**: {{METRIC_3_TARGET}}
+- **{{METRIC_4_NAME}}**: {{METRIC_4_TARGET}}
+- **{{METRIC_5_NAME}}**: {{METRIC_5_TARGET}}
