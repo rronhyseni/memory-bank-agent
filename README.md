@@ -42,7 +42,7 @@ This copies the `.cursor/` folder with commands and rules into your project root
 ```bash
 ~/memory-bank-agent/install          # Install .cursor/ (default)
 ~/memory-bank-agent/install --cursor # Install .cursor/ explicitly
-~/memory-bank-agent/install --claude  # Install .cloude/ (for Claude Desktop)
+~/memory-bank-agent/install --claude  # Install .claude/ (for Claude Desktop)
 ~/memory-bank-agent/install --all    # Install both
 ```
 

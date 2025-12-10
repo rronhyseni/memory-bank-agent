@@ -1,7 +1,7 @@
 #!/bin/bash
 # 🚀 Memory Bank Agent Installer v3
 # Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--claude|--all]
-# Copies .cursor/ and/or .cloud/ folders + initializes memory-bank/
+# Copies .cursor/ and/or .claude/ folders
 
 set -e
 
@@ -36,8 +36,8 @@ else
   echo ""
   echo "Options:"
   echo "  --cursor  Copy .cursor/ folder only (default)"
-  echo "  --claude  Copy .cloud/ folder only"
-  echo "  --all     Copy both .cursor/ and .cloud/ folders"
+  echo "  --claude  Copy .claude/ folder only"
+  echo "  --all     Copy both .cursor/ and .claude/ folders"
   exit 1
 fi
 
@@ -80,41 +80,16 @@ if [ "$INSTALL_CURSOR" = true ]; then
   fi
 fi
 
-# Install .cloud/
+# Install .claude/
 if [ "$INSTALL_CLOUD" = true ]; then
-  echo -e "${GREEN}☁️  Installing .cloud/ folder...${NC}"
-  if [ -d "$SCRIPT_DIR/.cloud" ]; then
-    if [ -d "$TARGET_DIR/.cloud" ]; then
-      echo "   ⚠️  .cloud/ already exists, merging safely..."
-      cp -rn "$SCRIPT_DIR/.cloud/"* "$TARGET_DIR/.cloud/" 2>/dev/null || true
-      echo "   ✅ .cloud/ merged"
-    else
-      cp -r "$SCRIPT_DIR/.cloud" "$TARGET_DIR/"
-      echo "   ✅ .cloud/ copied"
-    fi
+  echo -e "${GREEN}☁️  Installing .claude/ folder...${NC}"
+  if [ -d "$SCRIPT_DIR/.claude" ]; then
+    cp -r "$SCRIPT_DIR/.claude" "$TARGET_DIR/"
+    echo "   ✅ .claude/ copied"
   else
-    echo "   ⚠️  No .cloud/ folder found in memory-bank-agent"
+    echo "   ⚠️  No .claude/ folder found in memory-bank-agent"
   fi
 fi
-
-# Initialize memory-bank/
-echo -e "${GREEN}📝 Initializing memory-bank/...${NC}"
-MEMORY_BANK_DIR="$TARGET_DIR/memory-bank"
-
-if [ ! -d "$MEMORY_BANK_DIR" ]; then
-  mkdir -p "$MEMORY_BANK_DIR"
-  echo "   ✅ Created memory-bank/"
-fi
-
-# Create stub files if they don't exist
-STUBS=("project-brief.md" "product-context.md" "system-patterns.md" "tech-context.md" "active-context.md")
-for stub in "${STUBS[@]}"; do
-  if [ ! -f "$MEMORY_BANK_DIR/$stub" ]; then
-    echo "# ${stub%.md}" > "$MEMORY_BANK_DIR/$stub"
-    echo "" >> "$MEMORY_BANK_DIR/$stub"
-    echo "<!-- This file will be populated by running the /init command in Cursor -->" >> "$MEMORY_BANK_DIR/$stub"
-  fi
-done
 
 echo ""
 echo -e "${GREEN}🎉 Installation Complete!${NC}"
