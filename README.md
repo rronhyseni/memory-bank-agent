@@ -51,8 +51,8 @@ This copies the `.cursor/` folder with commands and rules into your project root
 1. **Restart Cursor** (Cmd/Ctrl + Shift + P → "Developer: Reload Window")
 2. Run these commands:
    ```
-   /init
-   /include
+   mb/init
+   mb/include
    ```
 
 ## Usage
@@ -62,10 +62,10 @@ This copies the `.cursor/` folder with commands and rules into your project root
 Run these slash commands - AI will ask 3-5 questions, then generate the docs:
 
 ```
-/shape-project-brief
-/shape-system-patterns
-/shape-tech-context
-/shape-product-context
+mb/shape-project-brief
+mb/shape-system-patterns
+mb/shape-tech-context
+mb/shape-product-context
 ```
 
 Files are created in `memory-bank/` folder at your project root.
@@ -73,15 +73,15 @@ Files are created in `memory-bank/` folder at your project root.
 ### Daily Workflow
 
 - AI reads `memory-bank/*.md` automatically every session
-- After completing work: `/update-active-context`
-- When patterns change: re-run relevant `/shape-*` command
+- After completing work: `mb/update-active-context`
+- When patterns change: re-run relevant `mb/shape-*` command
 
 ## What Gets Installed
 
 ```
 your-project-root/
 ├── .cursor/
-│   ├── commands/mb/          # Slash commands (/init, /shape-*, etc.)
+│   ├── commands/mb/          # Slash commands (mb/init, mb/shape-*, etc.)
 │   └── rules/                # Memory Bank rules
 └── memory-bank/              # Generated docs (AI reads these)
     ├── projectBrief.md
