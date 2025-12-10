@@ -1,7 +1,7 @@
 #!/bin/bash
 # 🚀 Memory Bank Agent Installer v3
 # Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--claude|--all]
-# Copies .cursor/ and/or .claude/ folders
+# Copies .cursor/ and/or .claude/ folders + CLAUDE.md (for Claude Code)
 
 set -e
 
@@ -19,18 +19,18 @@ TARGET_DIR="$(pwd)"
 
 # Default: install .cursor only
 INSTALL_CURSOR=true
-INSTALL_CLOUD=false
+INSTALL_CLAUDE=false
 
 # Parse arguments
 if [ "$1" = "--claude" ]; then
   INSTALL_CURSOR=false
-  INSTALL_CLOUD=true
+  INSTALL_CLAUDE=true
 elif [ "$1" = "--all" ]; then
   INSTALL_CURSOR=true
-  INSTALL_CLOUD=true
+  INSTALL_CLAUDE=true
 elif [ "$1" = "--cursor" ] || [ -z "$1" ]; then
   INSTALL_CURSOR=true
-  INSTALL_CLOUD=false
+  INSTALL_CLAUDE=false
 else
   echo "Usage: ~/memory-bank-agent/install [--cursor|--claude|--all]"
   echo ""
@@ -80,24 +80,55 @@ if [ "$INSTALL_CURSOR" = true ]; then
   fi
 fi
 
-# Install .claude/
-if [ "$INSTALL_CLOUD" = true ]; then
+# Install .claude/ and CLAUDE.md
+if [ "$INSTALL_CLAUDE" = true ]; then
   echo -e "${GREEN}☁️  Installing .claude/ folder...${NC}"
   if [ -d "$SCRIPT_DIR/.claude" ]; then
-    cp -r "$SCRIPT_DIR/.claude" "$TARGET_DIR/"
-    echo "   ✅ .claude/ copied"
+    if [ -d "$TARGET_DIR/.claude" ]; then
+      echo "   ⚠️  .claude/ already exists, merging safely..."
+      mkdir -p "$TARGET_DIR/.claude/commands"
+      cp -rn "$SCRIPT_DIR/.claude/commands/"* "$TARGET_DIR/.claude/commands/" 2>/dev/null || true
+      echo "   ✅ Commands merged"
+    else
+      cp -r "$SCRIPT_DIR/.claude" "$TARGET_DIR/"
+      echo "   ✅ .claude/ copied"
+    fi
   else
     echo "   ⚠️  No .claude/ folder found in memory-bank-agent"
+  fi
+  
+  # Copy CLAUDE.md (required for Claude Code to load project context)
+  echo -e "${GREEN}📄 Installing CLAUDE.md...${NC}"
+  if [ -f "$SCRIPT_DIR/CLAUDE.md" ]; then
+    if [ -f "$TARGET_DIR/CLAUDE.md" ]; then
+      echo "   ⚠️  CLAUDE.md already exists, skipping (to preserve your customizations)"
+      echo "   💡 If you want to update it, manually copy from: $SCRIPT_DIR/CLAUDE.md"
+    else
+      cp "$SCRIPT_DIR/CLAUDE.md" "$TARGET_DIR/"
+      echo "   ✅ CLAUDE.md copied"
+    fi
+  else
+    echo "   ⚠️  No CLAUDE.md found in memory-bank-agent"
   fi
 fi
 
 echo ""
 echo -e "${GREEN}🎉 Installation Complete!${NC}"
 echo ""
-echo "Next steps:"
-echo "1. Restart Cursor (Cmd/Ctrl + Shift + P > 'Developer: Reload Window')"
-echo "2. Run: mb/init (this command is used to initialize the memory bank system)"
-echo "3. Run: mb/include (this command is used to ACTIVATE the memory bank system on sessions you see fit)"
-echo "4. Generate docs: mb/shape-project-brief, mb/shape-system-patterns, etc."
+if [ "$INSTALL_CURSOR" = true ]; then
+  echo "Next steps for Cursor:"
+  echo "1. Restart Cursor (Cmd/Ctrl + Shift + P > 'Developer: Reload Window')"
+  echo "2. Run: mb/init (this command is used to initialize the memory bank system)"
+  echo "3. Run: mb/include (this command is used to ACTIVATE the memory bank system on sessions you see fit)"
+  echo "4. Generate docs: mb/shape-project-brief, mb/shape-system-patterns, etc."
+fi
+if [ "$INSTALL_CLAUDE" = true ]; then
+  echo "Next steps for Claude Code:"
+  echo "1. Restart Claude Code (or open this project)"
+  echo "2. CLAUDE.md is now in your project root - Claude will automatically load it"
+  echo "3. Run: mb/init (this command is used to initialize the memory bank system)"
+  echo "4. Run: mb/include (this command is used to ACTIVATE the memory bank system on sessions you see fit)"
+  echo "5. Generate docs: mb/shape-project-brief, mb/shape-system-patterns, etc."
+fi
 echo ""
 echo -e "${BLUE}Happy coding! 🚀${NC}"
