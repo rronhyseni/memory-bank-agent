@@ -1,109 +1,96 @@
 # 🚀 Memory Bank Agent
 
-**AI-Powered Project Memory for Cursor**  
-Gives AI persistent memory of your project through structured documentation files.
+**AI-Powered Project Memory for Cursor & Claude Desktop**  
+Gives AI persistent memory of your project through structured documentation files. No more re-explaining your codebase every session.
 
-## What It Does
+## TL;DR Quickstart
 
-Memory Bank Agent creates and maintains 5 key documentation files in your project:
+1. **Clone once**: `cd ~ && git clone https://github.com/rronhyseni/memory-bank-agent.git`
+2. **Install in project**: `cd /path/to/project && ~/memory-bank-agent/install`
+3. **Restart Cursor**, then run: `mb/init` → `mb/include`
+4. **Generate docs**: `mb/shape-project-brief`, `mb/shape-system-patterns`, etc.
 
-- **project-brief.md** - Project overview, goals, and audience
-- **system-patterns.md** - Architecture, folder structure, conventions
-- **tech-context.md** - Stack, dependencies, setup instructions
-- **product-context.md** - Features, UX patterns, business logic
-- **active-context.md** - Current work, recent changes, next steps
+Done. AI now reads `memory-bank/*.md` files automatically.
 
-AI automatically reads these files for context in every session, eliminating the need to re-explain your project structure and patterns.
+---
 
 ## Installation
 
-### Step 1: Clone to Your Home Directory (One Time)
+### One-Time Setup
 
 ```bash
 cd ~
 git clone https://github.com/rronhyseni/memory-bank-agent.git
 ```
 
-> Replace `your-org` with your GitHub organization URL
+### Install in Your Project
 
-### Step 2: Install in Your Project
-
-**Navigate to your project's root folder** and run:
+Navigate to your project root and run:
 
 ```bash
-cd /path/to/your/project/root
 ~/memory-bank-agent/install
 ```
 
-This copies the `.cursor/` folder with commands and rules into your project root.
+**Options:**
 
-**Installation Options:**
+- `~/memory-bank-agent/install` - Install `.cursor/` (default)
+- `~/memory-bank-agent/install --claude` - Install `.claude/` (Claude Desktop)
+- `~/memory-bank-agent/install --all` - Install both
 
-```bash
-~/memory-bank-agent/install          # Install .cursor/ (default)
-~/memory-bank-agent/install --cursor # Install .cursor/ explicitly
-~/memory-bank-agent/install --claude  # Install .claude/ (for Claude Desktop)
-~/memory-bank-agent/install --all    # Install both
-```
+This copies `.cursor/` (or `.claude/`) with commands and rules into your project.
 
-### Step 3: Activate in Cursor
-
-1. **Restart Cursor** (Cmd/Ctrl + Shift + P → "Developer: Reload Window")
-2. Run these commands:
-   ```
-   mb/init
-   mb/include
-   ```
-
-## Usage
-
-### Generate Documentation
-
-Run these slash commands - AI will ask 3-5 questions, then generate the docs:
+**Restart Cursor** (Cmd/Ctrl + Shift + P → "Developer: Reload Window"), then run:
 
 ```
-mb/shape-project-brief
-mb/shape-system-patterns
-mb/shape-tech-context
-mb/shape-product-context
+mb/init
+mb/include
 ```
 
-Files are created in `memory-bank/` folder at your project root.
+---
 
-### Daily Workflow
+## Commands
 
-- AI reads `memory-bank/*.md` automatically every session
-- After completing work: `mb/update-active-context`
-- When patterns change: re-run relevant `mb/shape-*` command
+| Command                    | What It Does                                                  |
+| -------------------------- | ------------------------------------------------------------- |
+| `mb/init`                  | Initialize memory-bank system (creates `memory-bank/` folder) |
+| `mb/include`               | Activate memory bank rules for current session                |
+| `mb/shape-project-brief`   | Generate project overview, goals, audience                    |
+| `mb/shape-system-patterns` | Generate architecture, folder structure, conventions          |
+| `mb/shape-tech-context`    | Generate stack, dependencies, setup instructions              |
+| `mb/shape-product-context` | Generate features, UX patterns, business logic                |
+| `mb/update-active-context` | Update current work, recent changes, next steps               |
+
+Files are created/updated in `memory-bank/` folder. AI reads these automatically every session.
+
+---
 
 ## What Gets Installed
 
 ```
 your-project-root/
-├── .cursor/
-│   ├── commands/mb/          # Slash commands (mb/init, mb/shape-*, etc.)
-│   └── rules/                # Memory Bank rules
-└── memory-bank/              # Generated docs (AI reads these)
-    ├── projectBrief.md
-    ├── systemPatterns.md
-    ├── techContext.md
-    ├── productContext.md
-    └── activeContext.md
+├── .cursor/ (or .claude/)
+│   ├── commands/mb/     # Commands (mb/init, mb/shape-*, etc.)
+│   ├── rules/           # Memory Bank rules
+│   └── templates/       # Template files for generating docs
 ```
 
-## Recommended .gitignore
+---
 
-Add to your project's `.gitignore`:
+## Git Setup
+
+**Commit `.cursor/`** (or `.claude/`) to share commands and rules with your team.
+
+**Optional**: Add `memory-bank/` to `.gitignore` if you want to keep it personal:
 
 ```gitignore
-# Memory Bank - personal context
 memory-bank/
 ```
 
-**Commit `.cursor/`** to share commands with your team.  
-**Don't commit `memory-bank/`** - it's personal developer context.
+You can also commit `memory-bank/` to share project context with your team - it's up to you.
 
-## Optional: Add Alias
+---
+
+## Optional: Alias
 
 Add to `~/.zshrc` or `~/.bashrc`:
 
@@ -111,12 +98,9 @@ Add to `~/.zshrc` or `~/.bashrc`:
 alias mb-install="~/memory-bank-agent/install"
 ```
 
-Then use from any project root:
+Then: `cd /path/to/project && mb-install --all`
 
-```bash
-cd /path/to/project/root
-mb-install --all
-```
+---
 
 ## Why Use This?
 
@@ -128,4 +112,4 @@ mb-install --all
 ---
 
 **License**: MIT  
-**Works with**: Cursor, Claude Desktop (with --claude or --all flag)
+**Works with**: Cursor, Claude Desktop (other editors can reuse `.cursor/` / `.claude/` configs if supported)
