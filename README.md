@@ -10,7 +10,7 @@ Gives AI persistent memory of your project through structured documentation file
    - Cursor: `cd /path/to/project && ~/memory-bank-agent/install`
    - Claude Code: `cd /path/to/project && ~/memory-bank-agent/install --claude`
 3. **Restart your IDE** (Cursor: Cmd/Ctrl + Shift + P → "Developer: Reload Window")
-4. **Run**: `mb/init` → `mb/include`
+4. **In chat, run**: `mb/init` → `mb/include` (Cursor/Claude slash commands, not terminal)
 5. **Generate docs**: `mb/shape-project-brief`, `mb/shape-system-patterns`, etc.
 
 Done. AI now reads `memory-bank/*.md` files automatically.
@@ -50,11 +50,24 @@ Navigate to your project root and run:
 1. **Restart your IDE**:
    - Cursor: Cmd/Ctrl + Shift + P → "Developer: Reload Window"
    - Claude Code: Restart or reopen the project
-2. **Run commands**:
-   ```
-   mb/init
-   mb/include
-   ```
+
+---
+
+## How to Use (Cursor / Claude Chat)
+
+After you run `~/memory-bank-agent/install` in your project and restart your IDE, you're ready to use Memory Bank.
+
+- **Where to run commands**:  
+  Use the **chat panel on the right** in Cursor or Claude Code – these are **slash commands**, not terminal commands.
+- **See all commands**:  
+  Click into chat and type `/` to see all available `mb/*` commands.
+- **Quickstart flow** (recommended):
+  1. In chat, run: `mb/init`
+  2. Follow the prompts to generate all core `memory-bank/*.md` files
+  3. Then run: `mb/include` in chat to activate the rules for the session
+- **Shape-by-shape flow** (more control):
+  - Run individual commands in chat: `mb/shape-project-brief`, `mb/shape-product-context`, `mb/shape-tech-context`, `mb/shape-system-patterns`
+  - Use `mb/update-active-context` regularly while you work to keep the docs current
 
 ---
 
