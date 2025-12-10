@@ -6,9 +6,12 @@ Gives AI persistent memory of your project through structured documentation file
 ## TL;DR Quickstart
 
 1. **Clone once**: `cd ~ && git clone https://github.com/rronhyseni/memory-bank-agent.git`
-2. **Install in project**: `cd /path/to/project && ~/memory-bank-agent/install`
-3. **Restart Cursor**, then run: `mb/init` → `mb/include`
-4. **Generate docs**: `mb/shape-project-brief`, `mb/shape-system-patterns`, etc.
+2. **Install in project**:
+   - Cursor: `cd /path/to/project && ~/memory-bank-agent/install`
+   - Claude Code: `cd /path/to/project && ~/memory-bank-agent/install --claude`
+3. **Restart your IDE** (Cursor: Cmd/Ctrl + Shift + P → "Developer: Reload Window")
+4. **Run**: `mb/init` → `mb/include`
+5. **Generate docs**: `mb/shape-project-brief`, `mb/shape-system-patterns`, etc.
 
 Done. AI now reads `memory-bank/*.md` files automatically.
 
@@ -33,18 +36,25 @@ Navigate to your project root and run:
 
 **Options:**
 
-- `~/memory-bank-agent/install` - Install `.cursor/` (default)
-- `~/memory-bank-agent/install --claude` - Install `.claude/` (Claude Desktop)
-- `~/memory-bank-agent/install --all` - Install both
+- `~/memory-bank-agent/install` - Install `.cursor/` folder (Cursor IDE, default)
+- `~/memory-bank-agent/install --claude` - Install `.claude/` folder + `CLAUDE.md` (Claude Code)
+- `~/memory-bank-agent/install --all` - Install both (for projects using both IDEs)
 
-This copies `.cursor/` (or `.claude/`) with commands and rules into your project.
+**What gets installed:**
 
-**Restart Cursor** (Cmd/Ctrl + Shift + P → "Developer: Reload Window"), then run:
+- **Cursor**: `.cursor/` folder with commands, rules, and templates
+- **Claude Code**: `.claude/` folder with commands + `CLAUDE.md` file (project root)
 
-```
-mb/init
-mb/include
-```
+**After installation:**
+
+1. **Restart your IDE**:
+   - Cursor: Cmd/Ctrl + Shift + P → "Developer: Reload Window"
+   - Claude Code: Restart or reopen the project
+2. **Run commands**:
+   ```
+   mb/init
+   mb/include
+   ```
 
 ---
 
@@ -66,19 +76,45 @@ Files are created/updated in `memory-bank/` folder. AI reads these automatically
 
 ## What Gets Installed
 
+**For Cursor (`--cursor` or default):**
+
 ```
 your-project-root/
-├── .cursor/ (or .claude/)
+├── .cursor/
 │   ├── commands/mb/     # Commands (mb/init, mb/shape-*, etc.)
-│   ├── rules/           # Memory Bank rules
+│   ├── rules/           # Memory Bank rules (.mdc files)
 │   └── templates/       # Template files for generating docs
 ```
+
+**For Claude Code (`--claude`):**
+
+```
+your-project-root/
+├── .claude/
+│   └── commands/mb/     # Commands (mb/init, mb/shape-*, etc.)
+└── CLAUDE.md            # Memory Bank rules (loaded automatically by Claude Code)
+```
+
+**For Both (`--all`):**
+
+```
+your-project-root/
+├── .cursor/             # Cursor configuration
+├── .claude/             # Claude Code configuration
+└── CLAUDE.md            # Claude Code rules (project root)
+```
+
+**Note:** Templates are shared from `.cursor/templates/` and accessible by both environments.
 
 ---
 
 ## Git Setup
 
-**Commit `.cursor/`** (or `.claude/`) to share commands and rules with your team.
+**Commit configuration files** to share with your team:
+
+- `.cursor/` folder (for Cursor users)
+- `.claude/` folder (for Claude Code users)
+- `CLAUDE.md` file (required for Claude Code)
 
 **Optional**: Add `memory-bank/` to `.gitignore` if you want to keep it personal:
 
@@ -111,5 +147,23 @@ Then: `cd /path/to/project && mb-install --all`
 
 ---
 
+## How It Works
+
+**Cursor IDE:**
+
+- Rules are stored in `.cursor/rules/*.mdc` files
+- Commands are in `.cursor/commands/mb/`
+- Activated via `/include` command
+
+**Claude Code:**
+
+- Rules are stored in `CLAUDE.md` (project root) - automatically loaded
+- Commands are in `.claude/commands/mb/`
+- Activated via `/include` command
+
+Both environments use the same `memory-bank/` folder structure and commands, making it easy to switch between IDEs or use both.
+
+---
+
 **License**: MIT  
-**Works with**: Cursor, Claude Desktop (other editors can reuse `.cursor/` / `.claude/` configs if supported)
+**Works with**: Cursor IDE, Claude Code (other editors can reuse `.cursor/` / `.claude/` configs if supported)
