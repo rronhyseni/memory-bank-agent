@@ -5,10 +5,13 @@ Gives AI persistent memory of your project through structured documentation file
 
 ## TL;DR Quickstart
 
-1. **Clone once**: `cd ~ && git clone https://github.com/rronhyseni/memory-bank-agent.git`
+1. **Clone once**:
+   - **macOS/Linux**: `cd ~ && git clone https://github.com/rronhyseni/memory-bank-agent.git`
+   - **Windows**: `cd %USERPROFILE% && git clone https://github.com/rronhyseni/memory-bank-agent.git`
 2. **Install in project**:
-   - Cursor: `cd /path/to/project && ~/memory-bank-agent/install`
-   - Claude Code: `cd /path/to/project && ~/memory-bank-agent/install --claude`
+   - **macOS/Linux**: `cd /path/to/project && ~/memory-bank-agent/install`
+   - **Windows**: `cd C:\path\to\project && %USERPROFILE%\memory-bank-agent\install.bat` (will prompt for PowerShell or Bash)
+   - Options: `--cursor` (default), `--claude`, or `--all`
 3. **Restart your IDE** (Cursor: Cmd/Ctrl + Shift + P → "Developer: Reload Window")
 4. **In chat, run**: `mb/init` → `mb/include` (Cursor/Claude slash commands, not terminal)
 5. **Generate docs**: `mb/shape-project-brief`, `mb/shape-system-patterns`, etc.
@@ -21,8 +24,17 @@ Done. AI now reads `memory-bank/*.md` files automatically.
 
 ### One-Time Setup
 
+**macOS/Linux:**
+
 ```bash
 cd ~
+git clone https://github.com/rronhyseni/memory-bank-agent.git
+```
+
+**Windows:**
+
+```cmd
+cd %USERPROFILE%
 git clone https://github.com/rronhyseni/memory-bank-agent.git
 ```
 
@@ -30,15 +42,28 @@ git clone https://github.com/rronhyseni/memory-bank-agent.git
 
 Navigate to your project root and run:
 
+**macOS/Linux:**
+
 ```bash
 ~/memory-bank-agent/install
 ```
 
-**Options:**
+**Windows:**
 
-- `~/memory-bank-agent/install` - Install `.cursor/` folder (Cursor IDE, default)
-- `~/memory-bank-agent/install --claude` - Install `.claude/` folder + `CLAUDE.md` (Claude Code)
-- `~/memory-bank-agent/install --all` - Install both (for projects using both IDEs)
+```cmd
+%USERPROFILE%\memory-bank-agent\install.bat
+```
+
+The Windows installer will prompt you to choose:
+
+- **[1] PowerShell** (recommended, works natively on Windows)
+- **[2] Bash** (requires Git Bash - will auto-detect if installed)
+
+**Options (work with both methods):**
+
+- `install` / `install.bat` - Install `.cursor/` folder (Cursor IDE, default)
+- `install --claude` / `install.bat --claude` - Install `.claude/` folder + `CLAUDE.md` (Claude Code)
+- `install --all` / `install.bat --all` - Install both (for projects using both IDEs)
 
 **What gets installed:**
 
@@ -141,13 +166,21 @@ You can also commit `memory-bank/` to share project context with your team - it'
 
 ## Optional: Alias
 
-Add to `~/.zshrc` or `~/.bashrc`:
+**macOS/Linux** - Add to `~/.zshrc` or `~/.bashrc`:
 
 ```bash
 alias mb-install="~/memory-bank-agent/install"
 ```
 
 Then: `cd /path/to/project && mb-install --all`
+
+**Windows** - Add to PowerShell profile (`$PROFILE`):
+
+```powershell
+function mb-install { & "$env:USERPROFILE\memory-bank-agent\install.bat" $args }
+```
+
+Then: `cd C:\path\to\project; mb-install --all`
 
 ---
 
