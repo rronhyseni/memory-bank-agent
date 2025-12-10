@@ -11,7 +11,7 @@ This file defines a persistent memory system using Markdown files in `memory-ban
 
 ## Core Files
 
-- `project-brief.md`: High-level scope, goals, requirements.
+- `projectBrief.md`: High-level scope, goals, requirements.
 - `productContext.md`: Users, problems, UX journeys.
 - `systemPatterns.md`: Architecture, patterns, decisions.
 - `techContext.md`: Stack, dependencies, constraints.
@@ -56,7 +56,7 @@ When triggered:
 
    - Load `.cursor/commands/mb/shape-project-brief.md`
    - Follow its process (it will ask its own questions, but reuse project name, stack, architecture from Q1-Q4)
-   - Generate `memory-bank/project-brief.md` using `.cursor/templates/project-brief.template.md`
+   - Generate `memory-bank/projectBrief.md` using `.cursor/templates/project-brief.template.md`
 
    **Phase 2: Product Context**
 
@@ -94,7 +94,7 @@ When triggered:
 
    - Create `memory-bank/progress.md` with initial entry:
      - Current date
-     - Entry: "Memory bank bootstrapped - created project-brief.md, productContext.md, techContext.md, systemPatterns.md, activeContext.md, and progress.md"
+     - Entry: "Memory bank bootstrapped - created projectBrief.md, productContext.md, techContext.md, systemPatterns.md, activeContext.md, and progress.md"
 
 5. **Validation Step**:
 
@@ -120,7 +120,7 @@ When triggered:
      - Project name matches across files
      - Tech stack mentioned consistently
      - Architecture type aligns across documents
-     - User types mentioned in productContext align with goals in project-brief
+     - User types mentioned in productContext align with goals in projectBrief
 
    - **Surface issues**:
 
@@ -149,7 +149,7 @@ When triggered:
 
 ## Related Commands
 
-- `/shape-project-brief`: Update project-brief.md independently
+- `/shape-project-brief`: Update projectBrief.md independently
 - `/shape-product-context`: Update productContext.md independently
 - `/shape-tech-context`: Update techContext.md independently
 - `/shape-system-patterns`: Update systemPatterns.md independently
