@@ -1,6 +1,6 @@
 #!/bin/bash
 # 🚀 Memory Bank Agent Installer v3
-# Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--cloud|--all]
+# Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--claude|--all]
 # Copies .cursor/ and/or .cloud/ folders + initializes memory-bank/
 
 set -e
@@ -22,7 +22,7 @@ INSTALL_CURSOR=true
 INSTALL_CLOUD=false
 
 # Parse arguments
-if [ "$1" = "--cloud" ]; then
+if [ "$1" = "--claude" ]; then
   INSTALL_CURSOR=false
   INSTALL_CLOUD=true
 elif [ "$1" = "--all" ]; then
@@ -32,11 +32,11 @@ elif [ "$1" = "--cursor" ] || [ -z "$1" ]; then
   INSTALL_CURSOR=true
   INSTALL_CLOUD=false
 else
-  echo "Usage: ~/memory-bank-agent/install [--cursor|--cloud|--all]"
+  echo "Usage: ~/memory-bank-agent/install [--cursor|--claude|--all]"
   echo ""
   echo "Options:"
   echo "  --cursor  Copy .cursor/ folder only (default)"
-  echo "  --cloud   Copy .cloud/ folder only"
+  echo "  --claude  Copy .cloud/ folder only"
   echo "  --all     Copy both .cursor/ and .cloud/ folders"
   exit 1
 fi
@@ -121,8 +121,8 @@ echo -e "${GREEN}🎉 Installation Complete!${NC}"
 echo ""
 echo "Next steps:"
 echo "1. Restart Cursor (Cmd/Ctrl + Shift + P > 'Developer: Reload Window')"
-echo "2. Run: /init"
-echo "3. Run: /include"
-echo "4. Generate docs: /shape-project-brief, /shape-system-patterns, etc."
+echo "2. Run: mb/init (this command is used to initialize the memory bank system)"
+echo "3. Run: mb/include (this command is used to ACTIVATE the memory bank system on sessions you see fit)"
+echo "4. Generate docs: mb/shape-project-brief, mb/shape-system-patterns, etc."
 echo ""
 echo -e "${BLUE}Happy coding! 🚀${NC}"

@@ -42,7 +42,7 @@ This copies the `.cursor/` folder with commands and rules into your project root
 ```bash
 ~/memory-bank-agent/install          # Install .cursor/ (default)
 ~/memory-bank-agent/install --cursor # Install .cursor/ explicitly
-~/memory-bank-agent/install --cloud  # Install .cloud/ (for Windsurf)
+~/memory-bank-agent/install --claude  # Install .cloude/ (for Claude Desktop)
 ~/memory-bank-agent/install --all    # Install both
 ```
 
@@ -128,4 +128,4 @@ mb-install --all
 ---
 
 **License**: MIT  
-**Works with**: Cursor, Windsurf (with --cloud or --all flag)
+**Works with**: Cursor, Claude Desktop (with --claude or --all flag)
