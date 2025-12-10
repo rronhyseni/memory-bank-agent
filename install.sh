@@ -1,89 +1,128 @@
-```bash
 #!/bin/bash
-# 🛡️ SAFE Memory Bank Installer v2
-# Usage: ./install.sh /path/to/project  (e.g., ./install.sh /desktop/wave-app)
-# - Adds shapes to .cursor/ WITHOUT overwriting rules.md/commands/
-# - Initializes memory-bank/ safely (mkdir + stubs if empty)
-# - Idempotent & non-destructive
+# 🚀 Memory Bank Agent Installer v3
+# Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--cloud|--all]
+# Copies .cursor/ and/or .cloud/ folders + initializes memory-bank/
 
-TARGET_DIR=$1
-if [ -z "$TARGET_DIR" ]; then
-  echo "Usage: ./install.sh /path/to/project"
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Get the script's directory (where memory-bank-agent is installed)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Target is current working directory
+TARGET_DIR="$(pwd)"
+
+# Default: install .cursor only
+INSTALL_CURSOR=true
+INSTALL_CLOUD=false
+
+# Parse arguments
+if [ "$1" = "--cloud" ]; then
+  INSTALL_CURSOR=false
+  INSTALL_CLOUD=true
+elif [ "$1" = "--all" ]; then
+  INSTALL_CURSOR=true
+  INSTALL_CLOUD=true
+elif [ "$1" = "--cursor" ] || [ -z "$1" ]; then
+  INSTALL_CURSOR=true
+  INSTALL_CLOUD=false
+else
+  echo "Usage: ~/memory-bank-agent/install [--cursor|--cloud|--all]"
+  echo ""
+  echo "Options:"
+  echo "  --cursor  Copy .cursor/ folder only (default)"
+  echo "  --cloud   Copy .cloud/ folder only"
+  echo "  --all     Copy both .cursor/ and .cloud/ folders"
   exit 1
 fi
 
-cd "$TARGET_DIR" || { echo "❌ Target dir invalid: $TARGET_DIR"; exit 1; }
-echo "🚀 Installing into $(pwd)..."
+echo -e "${BLUE}🚀 Memory Bank Agent Installer${NC}"
+echo -e "   Source: ${SCRIPT_DIR}"
+echo -e "   Target: ${TARGET_DIR}"
+echo ""
 
-# Source files (assumes run from agent dir with shape-*.md)
-SHAPE_FILES=("shape-project-brief.md" "shape-systemPatterns.md" "shape-techContext.md" "shape-productContext.md" "shape-activeContext.md")
+# Check if we're in the memory-bank-agent directory itself
+if [ "$TARGET_DIR" = "$SCRIPT_DIR" ]; then
+  echo -e "${YELLOW}⚠️  You're running install from the memory-bank-agent directory itself!${NC}"
+  echo "   Please run this from your project directory:"
+  echo "   cd /path/to/your/project"
+  echo "   ~/memory-bank-agent/install"
+  exit 1
+fi
 
-CURSOR_DIR=".cursor"
-MEMORY_BANK_DIR="memory-bank"
-
-# 1. Safe .cursor/ handling
-if [ ! -d "$CURSOR_DIR" ]; then
-  echo "📁 Creating $CURSOR_DIR/ + copying base..."
-  cp -r ../.cursor/ "$CURSOR_DIR/"  # Copy full base from agent
-else
-  echo "🔄 Adding to existing $CURSOR_DIR/..."
-  ADDED=0
-  for shape in "${SHAPE_FILES[@]}"; do
-    SRC_SHAPE="../$shape"
-    if [ -f "$SRC_SHAPE" ] && [ ! -f "$CURSOR_DIR/$shape" ]; then
-      cp "$SRC_SHAPE" "$CURSOR_DIR/"
-      echo "➕ $shape"
-      ((ADDED++))
+# Install .cursor/
+if [ "$INSTALL_CURSOR" = true ]; then
+  echo -e "${GREEN}📁 Installing .cursor/ folder...${NC}"
+  if [ -d "$TARGET_DIR/.cursor" ]; then
+    echo "   ⚠️  .cursor/ already exists, merging safely..."
+    
+    # Copy commands if they don't exist
+    if [ -d "$SCRIPT_DIR/.cursor/commands" ]; then
+      mkdir -p "$TARGET_DIR/.cursor/commands"
+      cp -rn "$SCRIPT_DIR/.cursor/commands/"* "$TARGET_DIR/.cursor/commands/" 2>/dev/null || true
+      echo "   ✅ Commands merged"
     fi
-  done
-  if [ $ADDED -eq 0 ]; then
-    echo "ℹ️ All shapes already present."
-  fi
-
-  # Safe rules append
-  if [ -f "../rules-memory-bank.md" ]; then
-    if [ -f "$CURSOR_DIR/rules.md" ] && ! grep -q "Memory Bank Rules" "$CURSOR_DIR/rules.md"; then
-      echo "" >> "$CURSOR_DIR/rules.md"
-      echo "# Memory Bank Rules (auto-appended)" >> "$CURSOR_DIR/rules.md"
-      cat ../rules-memory-bank.md >> "$CURSOR_DIR/rules.md"
-      echo "📜 Appended Memory Bank rules."
-    elif [ ! -f "$CURSOR_DIR/rules.md" ]; then
-      cp ../rules-memory-bank.md "$CURSOR_DIR/rules.md"
-      echo "📜 Copied rules.md"
+    
+    # Copy rules if they don't exist
+    if [ -d "$SCRIPT_DIR/.cursor/rules" ]; then
+      mkdir -p "$TARGET_DIR/.cursor/rules"
+      cp -n "$SCRIPT_DIR/.cursor/rules/"* "$TARGET_DIR/.cursor/rules/" 2>/dev/null || true
+      echo "   ✅ Rules merged"
     fi
+  else
+    cp -r "$SCRIPT_DIR/.cursor" "$TARGET_DIR/"
+    echo "   ✅ .cursor/ copied"
   fi
 fi
 
-# 2. Safe memory-bank/
+# Install .cloud/
+if [ "$INSTALL_CLOUD" = true ]; then
+  echo -e "${GREEN}☁️  Installing .cloud/ folder...${NC}"
+  if [ -d "$SCRIPT_DIR/.cloud" ]; then
+    if [ -d "$TARGET_DIR/.cloud" ]; then
+      echo "   ⚠️  .cloud/ already exists, merging safely..."
+      cp -rn "$SCRIPT_DIR/.cloud/"* "$TARGET_DIR/.cloud/" 2>/dev/null || true
+      echo "   ✅ .cloud/ merged"
+    else
+      cp -r "$SCRIPT_DIR/.cloud" "$TARGET_DIR/"
+      echo "   ✅ .cloud/ copied"
+    fi
+  else
+    echo "   ⚠️  No .cloud/ folder found in memory-bank-agent"
+  fi
+fi
+
+# Initialize memory-bank/
+echo -e "${GREEN}📝 Initializing memory-bank/...${NC}"
+MEMORY_BANK_DIR="$TARGET_DIR/memory-bank"
+
 if [ ! -d "$MEMORY_BANK_DIR" ]; then
   mkdir -p "$MEMORY_BANK_DIR"
-  echo "✅ Created $MEMORY_BANK_DIR/"
+  echo "   ✅ Created memory-bank/"
 fi
 
-# Add stubs if empty
-STUBS=("project-brief.md" "productContext.md" "systemPatterns.md" "techContext.md" "active-context.md")
+# Create stub files if they don't exist
+STUBS=("project-brief.md" "product-context.md" "system-patterns.md" "tech-context.md" "active-context.md")
 for stub in "${STUBS[@]}"; do
   if [ ! -f "$MEMORY_BANK_DIR/$stub" ]; then
-    touch "$MEMORY_BANK_DIR/$stub"
-    echo "# $stub" > "$MEMORY_BANK_DIR/$stub"
-    echo "📝 Stub: $MEMORY_BANK_DIR/$stub"
+    echo "# ${stub%.md}" > "$MEMORY_BANK_DIR/$stub"
+    echo "" >> "$MEMORY_BANK_DIR/$stub"
+    echo "<!-- This file will be populated by running the /init command in Cursor -->" >> "$MEMORY_BANK_DIR/$stub"
   fi
 done
 
 echo ""
-echo "🎉 Memory Bank setup COMPLETE!"
-echo "💡 Restart Cursor → Use /shape-project-brief"
-echo "   Generate all: /shape-systemPatterns, etc."
-```
-
-## ✅ Why Keep & Use This (Your Simple Flow)
-- **Your usage unchanged**: `./install.sh /desktop/wave-app` (from agent dir).
-- **Now 100% safe**: No overwrites! Adds shapes/rules-append only.
-- **Handles existing**: Merges perfectly.
-- **Idempotent**: Re-run = no harm.
-- **Minimal deps**: Pure bash, no git/temp dirs.
-
-**Test it**:
-1. Put shapes/rules-memory-bank.md in agent root.
-2. Run on test project → .cursor/ intact + shapes added.
-3. Perfect! 🚀
+echo -e "${GREEN}🎉 Installation Complete!${NC}"
+echo ""
+echo "Next steps:"
+echo "1. Restart Cursor (Cmd/Ctrl + Shift + P > 'Developer: Reload Window')"
+echo "2. Run: /init"
+echo "3. Run: /include"
+echo "4. Generate docs: /shape-project-brief, /shape-system-patterns, etc."
+echo ""
+echo -e "${BLUE}Happy coding! 🚀${NC}"

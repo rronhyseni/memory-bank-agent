@@ -1,75 +1,131 @@
 # 🚀 Memory Bank Agent
 
 **AI-Powered Project Memory for Cursor**  
-Streamline codebase context with structured docs: `projectBrief.md`, `systemPatterns.md`, `techContext.md`, `productContext.md`, `active-context.md`.
+Gives AI persistent memory of your project through structured documentation files.
 
-Generates via slash commands (`/shape-*`) – AI infers from code, asks minimal Qs.
+## What It Does
 
-## 📦 Quick Install (Safe & Simple)
+Memory Bank Agent creates and maintains 5 key documentation files in your project:
 
-1. Clone this repo:
+- **project-brief.md** - Project overview, goals, and audience
+- **system-patterns.md** - Architecture, folder structure, conventions
+- **tech-context.md** - Stack, dependencies, setup instructions
+- **product-context.md** - Features, UX patterns, business logic
+- **active-context.md** - Current work, recent changes, next steps
 
-   ```bash
-   git clone https://github.com/rronhyseni/memory-bank-agent.git
-   cd memory-bank-agent
-   ```
+AI automatically reads these files for context in every session, eliminating the need to re-explain your project structure and patterns.
 
-2. Install into **any project**:
-   ```bash
-   ./install.sh /path/to/your-project  # e.g., ./install.sh ~/Desktop/wave-app
-   ```
+## Installation
 
-✅ **Safe**: Adds shapes/rules to `.cursor/` **without overwriting** existing rules.md. Creates `memory-bank/` + stubs.
+### Step 1: Clone to Your Home Directory (One Time)
 
-## 🎯 Usage in Cursor
+```bash
+cd ~
+git clone https://github.com/rronhyseni/memory-bank-agent.git
+```
 
-1. **Restart Cursor** (reload rules: Cmd/Ctrl + Shift + P > "Cursor: Reload Rules").
-2. **Generate docs**:
+> Replace `your-org` with your GitHub organization URL
 
+### Step 2: Install in Your Project
+
+**Navigate to your project's root folder** and run:
+
+```bash
+cd /path/to/your/project/root
+~/memory-bank-agent/install
+```
+
+This copies the `.cursor/` folder with commands and rules into your project root.
+
+**Installation Options:**
+
+```bash
+~/memory-bank-agent/install          # Install .cursor/ (default)
+~/memory-bank-agent/install --cursor # Install .cursor/ explicitly
+~/memory-bank-agent/install --cloud  # Install .cloud/ (for Windsurf)
+~/memory-bank-agent/install --all    # Install both
+```
+
+### Step 3: Activate in Cursor
+
+1. **Restart Cursor** (Cmd/Ctrl + Shift + P → "Developer: Reload Window")
+2. Run these commands:
    ```
    /init
    /include
-   /shape-project-brief
-   /shape-system-patterns
-   /shape-tech-context
-   /shape-product-context
-   /shape-active-context
    ```
 
-   - Answer 3-5 Qs → AI generates full MD in `memory-bank/`.
-   - Review/edit.
+## Usage
 
-3. **Daily workflow**:
-   - Read `memory-bank/*.md` for context.
-   - Update `active-context.md` after tasks.
-   - AI always uses these as persistent memory.
+### Generate Documentation
 
-## 🛠️ What's Inside
+Run these slash commands - AI will ask 3-5 questions, then generate the docs:
 
 ```
-.cursor/
-├── shape-*.md     # Prompts for doc generation
-└── rules.md       # Cursor rules (appended safely)
+/shape-project-brief
+/shape-system-patterns
+/shape-tech-context
+/shape-product-context
+```
 
+Files are created in `memory-bank/` folder at your project root.
+
+### Daily Workflow
+
+- AI reads `memory-bank/*.md` automatically every session
+- After completing work: `/update-active-context`
+- When patterns change: re-run relevant `/shape-*` command
+
+## What Gets Installed
+
+```
+your-project-root/
+├── .cursor/
+│   ├── commands/mb/          # Slash commands (/init, /shape-*, etc.)
+│   └── rules/                # Memory Bank rules
+└── memory-bank/              # Generated docs (AI reads these)
+    ├── projectBrief.md
+    ├── systemPatterns.md
+    ├── techContext.md
+    ├── productContext.md
+    └── activeContext.md
+```
+
+## Recommended .gitignore
+
+Add to your project's `.gitignore`:
+
+```gitignore
+# Memory Bank - personal context
 memory-bank/
-├── projectBrief.md
-├── systemPatterns.md
-├── techContext.md
-├── productContext.md
-└── activeContext.md
 ```
 
-## 🔧 Customize
+**Commit `.cursor/`** to share commands with your team.  
+**Don't commit `memory-bank/`** - it's personal developer context.
 
-- Edit `shape-*.md` for project-specific tweaks.
-- Re-run `install.sh` anytime (idempotent).
+## Optional: Add Alias
 
-## 🙌 License
+Add to `~/.zshrc` or `~/.bashrc`:
 
-MIT – Fork & adapt!
-
-**Made for monorepos like NestJS/Next.js. Works anywhere!**
-
+```bash
+alias mb-install="~/memory-bank-agent/install"
 ```
 
+Then use from any project root:
+
+```bash
+cd /path/to/project/root
+mb-install --all
 ```
+
+## Why Use This?
+
+- **Persistent Context**: AI remembers your project across sessions
+- **Less Repetition**: Stop re-explaining patterns and architecture
+- **Better Code**: AI follows your established conventions
+- **Fast Onboarding**: New devs get context instantly
+
+---
+
+**License**: MIT  
+**Works with**: Cursor, Windsurf (with --cloud or --all flag)
