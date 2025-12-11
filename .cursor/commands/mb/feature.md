@@ -1,6 +1,4 @@
-cat > "/Users/rronhyseni/Desktop/POVIO/memory-bank-agent/.cursor/commands/mb/feature.md" << 'ENDOFFILE'
-
-# /mb/feature - Unified Feature Development
+# /mb/feature - Guided Feature Development
 
 Start a new feature, resume current work, or complete a feature.
 
@@ -11,9 +9,19 @@ Start a new feature, resume current work, or complete a feature.
 
 ---
 
-## Workflow
+## CRITICAL RULES FOR AI
 
-### MODE DETECTION
+**YOU MUST FOLLOW THESE RULES:**
+
+1. **ONE PHASE PER RESPONSE** - Complete only ONE phase, then END your response
+2. **NEVER ASSUME ANSWERS** - If you asked a question, WAIT for the user to answer
+3. **NEVER CREATE FILES** until user explicitly approves the spec
+4. **END RESPONSE** after each phase - let user respond before continuing
+5. **NO "proceeding with reasonable assumptions"** - This is FORBIDDEN
+
+---
+
+## MODE DETECTION
 
 First, check `memory-bank/features/active/` directory:
 
@@ -23,317 +31,280 @@ First, check `memory-bank/features/active/` directory:
 
 ---
 
-### MODE A: Start New Feature
+## MODE A: Start New Feature
 
-#### Step 1: Context Load (Silent)
+### PHASE 1: Discovery (ONE question only)
 
-Read these files to understand the project:
+**Read silently** (don't list these):
 
 - `memory-bank/project-brief.md`
 - `memory-bank/system-patterns.md`
 - `memory-bank/tech-context.md`
-- `memory-bank/active-context.md`
 
-#### Step 2: Gather Information
+**Then ask ONE question:**
 
-Ask the user:
-
-> 🎯 What feature are you building?
-
-After they respond, ask these follow-ups (adapt based on their answer):
-
-> Got it! A few quick questions:
+> 🎯 **What feature are you building?**
 >
-> **Goal**: What does success look like? (one sentence)
->
-> **Scope**: Does this touch existing code, or is it mostly new?
-> _(I see from system-patterns you're using {{ARCHITECTURE_TYPE}})_
->
-> **Approach**: How do you want to build this?
->
-> - □ TDD - Write tests first, then implement
-> - □ Direct - Implement directly, add tests after
-> - □ Hybrid - Tests for critical paths only
->
-> **Constraints**: Any deadlines, required libraries, or things to avoid?
-> _(optional - press enter to skip)_
+> Describe it in your own words - what should it do?
 
-#### Step 2.5: AI Acceptance Criteria (Optional)
-
-After gathering feature info, offer:
-
-> Would you like me to generate acceptance criteria based on:
->
-> - Your description
-> - Similar patterns in `system-patterns.md`
-> - Common edge cases for this type of feature
->
-> □ Yes, generate suggestions
-> □ No, I'll write my own
-
-If yes, generate 3-5 acceptance criteria and show for approval/editing.
-
-#### Step 3: Scope Check
-
-If the feature description touches more than 3 major areas from `system-patterns.md`:
-
-> This looks like a large feature touching multiple systems:
->
-> - [Area 1]
-> - [Area 2]
-> - [Area 3]
->
-> Would you like to:
->
-> - □ Break into smaller features (recommended)
-> - □ Proceed as one feature (complex)
-
-#### Step 3.5: Visual Planning (Complex Features)
-
-If feature touches 3+ components, generate:
-
-> 📊 Here's a visual flow of this feature:
->
-> ```mermaid
-> flowchart LR
->     A[User Action] --> B[Component]
->     B --> C[API Call]
->     C --> D[Result]
-> ```
->
-> Does this match your mental model? (yes / adjust)
-
-#### Step 4: Generate Blueprint
-
-Create file: `memory-bank/features/active/[feature-name-kebab-case].md`
-
-Use the blueprint template from `.cursor/templates/blueprint.template.md`
-
-Fill in:
-
-- Feature name and goal
-- **Context Snapshot** (architecture, patterns, related files, dependencies)
-- EARS requirements based on discussion
-- Edge cases (ask if not mentioned)
-- Implementation steps (3-8 depending on complexity)
-- **Confidence scores** for each step (🟢/🟡/🔴)
-- Acceptance criteria (AI-generated or user-provided)
-- **Decisions table** (if any decisions made during planning)
-- TDD test type table if enabled
-- Mermaid diagram if complex
-
-**Step sizing guidelines:**
-
-| Type      | Duration  | Example                      |
-| --------- | --------- | ---------------------------- |
-| Setup     | 5-15 min  | Install deps, create files   |
-| Test      | 10-20 min | Write tests for one flow     |
-| Implement | 15-30 min | Build one component/function |
-| Integrate | 15-30 min | Wire things together         |
-| Verify    | 5-10 min  | Run tests, manual check      |
-| Review    | 10-20 min | Self-review, refactor        |
-
-**Confidence scoring:**
-
-| Score     | Meaning                  | Action                   |
-| --------- | ------------------------ | ------------------------ |
-| 🟢 High   | Clear path, no unknowns  | Proceed                  |
-| 🟡 Medium | Some verification needed | Note what to check       |
-| 🔴 Low    | Needs clarification      | Ask before starting step |
-
-#### Step 5: Approval
-
-Show the generated blueprint and ask:
-
-> 📋 Blueprint ready! Review above.
->
-> Proceed? (yes / edit / cancel)
-
-#### Step 6: Update Roadmap
-
-On approval, update `progress.md` Roadmap table:
-
-| #   | Feature          | Status    | Approach              |
-| --- | ---------------- | --------- | --------------------- |
-| 1   | {{FEATURE_NAME}} | 🔨 Active | {{TDD/Direct/Hybrid}} |
-
-#### Step 7: Begin Work
-
-On approval:
-
-1. Update `memory-bank/active-context.md`:
-   - Add: "## Current Feature\nWorking on: [Feature Name] - Step 1"
-2. Start executing Step 1
-3. After completing, update blueprint:
-   - Check box
-   - Add log entry with time spent
-   - Update Metrics section
-4. Continue to next step
+**⛔ END YOUR RESPONSE HERE. Wait for user to describe the feature.**
 
 ---
 
-### MODE B: Resume Feature
+### PHASE 2: Clarifying Questions
 
-#### Step 1: Load Blueprint
+After user describes the feature, ask 3-4 targeted questions based on what they said.
+
+**Format your response like this:**
+
+> Thanks! I understand you want to build **[restate feature in one sentence]**.
+>
+> A few questions to make sure I get this right:
+>
+> 1. **Goal**: What does success look like when this is done? (one sentence)
+>
+> 2. **Scope**: [Ask about scope based on their description - e.g., "Does this need a new API endpoint, or just frontend changes?"]
+>
+> 3. **Approach**: How do you want to build this?
+>
+>    - **TDD** - Write tests first, then implement
+>    - **Direct** - Implement directly, add tests after
+>    - **Hybrid** - Tests for critical paths only
+>
+> 4. **Constraints**: Any deadlines, required libraries, or things to avoid? _(optional - say "none" to skip)_
+
+**⛔ END YOUR RESPONSE HERE. Wait for user to answer ALL questions.**
+
+---
+
+### PHASE 3: Draft Spec (AI generates, user reviews)
+
+After user answers questions, generate a draft spec. DO NOT create any files yet.
+
+**Format your response like this:**
+
+> 📋 **Draft Spec: [Feature Name]**
+>
+> Based on your answers, here's what I'm proposing:
+>
+> ---
+>
+> **Goal:** [Their goal statement]
+>
+> **Scope:** [What's included/excluded]
+>
+> **Approach:** [TDD/Direct/Hybrid]
+>
+> ---
+>
+> ### Acceptance Criteria (AI-suggested)
+>
+> - [ ] [Criterion 1 - based on their description]
+> - [ ] [Criterion 2]
+> - [ ] [Criterion 3]
+> - [ ] [Add more as appropriate]
+>
+> ### Edge Cases to Handle
+>
+> - [ ] [Edge case 1 - think about what could go wrong]
+> - [ ] [Edge case 2]
+> - [ ] [Edge case 3]
+>
+> ### Implementation Steps
+>
+> | #   | Step               | Type                 | Confidence |
+> | --- | ------------------ | -------------------- | ---------- |
+> | 1   | [Step description] | Setup/Implement/Test | 🟢/🟡/🔴   |
+> | 2   | [Step description] | ...                  | ...        |
+> | 3   | [Step description] | ...                  | ...        |
+>
+> > **Confidence:** 🟢 Clear path | 🟡 Needs verification | 🔴 Needs clarification
+>
+> ---
+>
+> **Does this look right?**
+>
+> - ✅ **"yes"** or **"approve"** - I'll create the blueprint
+> - ✏️ **"edit: [your changes]"** - Tell me what to adjust
+> - ❌ **"start over"** - We'll begin fresh
+
+**⛔ END YOUR RESPONSE HERE. Wait for user to approve, edit, or reject.**
+
+---
+
+### PHASE 4: Refinement (if user requests edits)
+
+If user says "edit: [changes]", update the spec and show it again.
+
+Repeat PHASE 3 with the changes incorporated.
+
+**⛔ END YOUR RESPONSE HERE. Wait for approval.**
+
+---
+
+### PHASE 5: Create Blueprint (only after explicit approval)
+
+**Only proceed here if user said "yes", "approve", "looks good", "go", "ACT", or similar approval.**
+
+1. **Create directory** (if needed): `memory-bank/features/active/`
+
+2. **Create blueprint file**: `memory-bank/features/active/[feature-name-kebab-case].md`
+
+   Use the template from `.cursor/templates/blueprint.template.md` and fill with approved spec.
+
+3. **Update `progress.md`** Roadmap table:
+
+   ```
+   | # | Feature | Status | Approach |
+   | 1 | [Feature Name] | 🔨 Active | [TDD/Direct/Hybrid] |
+   ```
+
+4. **Update `active-context.md`**:
+
+   - Add: "## Current Feature\nWorking on: [Feature Name] - Step 1"
+
+5. **Confirm creation:**
+
+> ✅ **Blueprint created!**
+>
+> 📄 `memory-bank/features/active/[name].md`
+>
+> **Next:** Ready to start Step 1?
+>
+> - **"yes"** - Begin implementation
+> - **"later"** - Save for next session (run `/mb/feature` to resume)
+
+**⛔ END YOUR RESPONSE HERE. Wait for user to say yes or later.**
+
+---
+
+### PHASE 6: Begin Implementation
+
+If user says "yes" to starting:
+
+1. Read the blueprint
+2. Execute Step 1
+3. After completing step, update blueprint:
+   - Check the checkbox
+   - Add log entry
+   - Update metrics
+4. Ask before continuing to Step 2
+
+---
+
+## MODE B: Resume Feature
+
+### PHASE 1: Load and Show Status
 
 Read the `.md` file in `memory-bank/features/active/`
 
-#### Step 1.5: Smart Resume
-
-Before showing status, analyze:
-
-1. **Time gap**: If > 24 hours since last work, load extra context
-2. **Git changes**: Check for any manual changes to related files
-3. **Blockers**: Review Blockers & Questions section
-4. **Low confidence steps**: Flag any 🔴 steps coming up
-
-If significant time passed (> 24h):
-
-> 📍 It's been {{DAYS}} days since you worked on this.
->
-> **Quick context refresh:**
->
-> - Architecture: {{ARCHITECTURE_TYPE}}
-> - Last completed: Step {{N}} - {{STEP_NAME}}
-> - Key decision: {{LAST_DECISION}}
-> - Open questions: {{BLOCKERS_COUNT}}
->
-> Ready to continue?
-
-#### Step 2: Show Status
+**Show status:**
 
 > 📍 **Resuming: [Feature Name]**
 >
-> **Progress**: Step [X] of [Y] > **TDD**: [Enabled/Disabled] > **Last**: [What was done in previous step] > **Next**: [Current unchecked step] {{CONFIDENCE}} > **Blockers**: [Count of open blockers]
+> | Status         | Value                    |
+> | -------------- | ------------------------ |
+> | Progress       | Step [X] of [Y]          |
+> | Approach       | [TDD/Direct/Hybrid]      |
+> | Last completed | [Step name]              |
+> | Next step      | [Step name] [Confidence] |
 >
-> Continue? (yes / show full plan / abandon)
+> **Continue with [Next Step Name]?**
+>
+> - **"yes"** - Continue implementation
+> - **"show plan"** - See full blueprint
+> - **"abandon"** - Archive incomplete
 
-If next step has 🔴 Low confidence:
-
-> ⚠️ Next step has low confidence. Let's clarify before proceeding:
-> [Show the uncertainty and ask for clarification]
-
-#### Step 3: Continue Work
-
-On "yes":
-
-1. Execute the current unchecked step
-2. Update blueprint:
-   - Checkbox
-   - Log entry with time spent
-   - Metrics section
-3. Continue to next step
-4. Work until user stops or feature complete
-
-On "show full plan":
-
-- Display entire blueprint
-- Ask to continue
-
-On "abandon":
-
-- Confirm: "Archive incomplete? This will move to archive with status 'Abandoned'"
-- If yes: Move to archive with `[ABANDONED]` prefix in filename
+**⛔ END YOUR RESPONSE HERE. Wait for user response.**
 
 ---
 
-### MODE C: Complete Feature (`/mb/feature done`)
+### PHASE 2: Continue or Show Plan
 
-#### Step 1: Verify Completion
+Based on user's choice:
 
-Check the blueprint:
+- **"yes"**: Execute next unchecked step, update blueprint
+- **"show plan"**: Display entire blueprint, then ask to continue
+- **"abandon"**: Confirm, then archive with `[ABANDONED]` prefix
+
+---
+
+## MODE C: Complete Feature (`/mb/feature done`)
+
+### PHASE 1: Verify Completion
+
+Check the blueprint for:
 
 - All plan checkboxes checked?
 - All acceptance criteria checked?
 - All edge cases handled?
-- Blockers section resolved?
+- Blockers resolved?
 
-If incomplete:
+**If incomplete, show what's missing:**
 
-> ⚠️ Feature not fully complete:
+> ⚠️ **Feature not fully complete:**
 >
 > **Missing steps:**
 >
-> - Step 4: Integration tests
+> - [ ] Step 4: Integration tests
 >
 > **Missing acceptance criteria:**
 >
-> - Error states handled
+> - [ ] Error states handled
 >
-> **Unresolved blockers:**
->
-> - ❓ Rate limiting approach
->
-> Complete anyway? (yes / no, continue working)
+> **Complete anyway?** (yes / no, continue working)
 
-#### Step 2: Calculate Metrics
-
-Gather from log entries:
-
-- Total time (sum of step times)
-- Steps completed
-- Tests written (count from TDD logs)
-- Files modified (from git or log)
-- Blockers encountered
-
-Update Metrics section in blueprint.
-
-#### Step 3: Archive
-
-1. Add completion timestamp and summary to blueprint
-2. Update Completion section:
-
-   ```markdown
-   **Completed:** YYYY-MM-DD
-   **Duration:** ~Xh Xm
-   **Final Status:** ✅ Complete
-
-   > Summary: Brief description of what was built
-   ```
-
-3. Move file: `features/active/[name].md` → `features/archive/YYYY-MM-DD-[name].md`
-
-#### Step 4: Update Memory Bank
-
-**Update `progress.md`:**
-
-- Update Roadmap table: Change status to ✅ Done
-- Add to "Completed" section with date and summary:
-
-  ```markdown
-  ### December 2024
-
-  - **[Feature Name]** (YYYY-MM-DD) - Brief summary
-    [→ archive](./features/archive/YYYY-MM-DD-feature-name.md)
-  ```
-
-**Update `active-context.md`:**
-
-- Remove current feature section
-- Add note: "Completed [Feature Name] on [date]"
-
-#### Step 5: Celebrate
-
-> ✅ **Feature Complete: [Name]**
->
-> **Summary:**
->
-> - [x] steps completed
-> - [Y] tests passing (if TDD)
-> - ~[Z]h total time
-> - Started: [date] → Completed: [date]
->
-> **Archived:** `features/archive/YYYY-MM-DD-[name].md`
->
-> 🚀 What's next? Run `/mb/feature` to start another.
+**⛔ END YOUR RESPONSE HERE. Wait for user response.**
 
 ---
 
-## TDD Enforcement
+### PHASE 2: Archive and Celebrate
 
-When TDD is enabled, for each implementation unit:
+If complete (or user confirms):
 
-### Test Classification
+1. Calculate metrics from log entries
+2. Add completion timestamp
+3. Move file: `features/active/[name].md` → `features/archive/YYYY-MM-DD-[name].md`
+4. Update `progress.md`: Change status to ✅ Done
+5. Update `active-context.md`: Remove current feature section
+
+**Show celebration:**
+
+> ✅ **Feature Complete: [Name]**
+>
+> | Metric          | Value  |
+> | --------------- | ------ |
+> | Total time      | ~Xh Xm |
+> | Steps completed | X/X    |
+> | Tests written   | X      |
+>
+> **Archived:** `features/archive/YYYY-MM-DD-[name].md`
+>
+> 🚀 Run `/mb/feature` to start another!
+
+---
+
+## REMINDERS FOR AI
+
+### NEVER DO THESE:
+
+- ❌ Ask questions and answer them yourself
+- ❌ Say "proceeding with reasonable assumptions"
+- ❌ Create files before user approves spec
+- ❌ Continue to next phase without user input
+- ❌ Bundle multiple phases in one response
+
+### ALWAYS DO THESE:
+
+- ✅ End response after each phase
+- ✅ Wait for user to respond before continuing
+- ✅ Confirm understanding before generating spec
+- ✅ Get explicit approval before creating files
+- ✅ Show what you're about to do before doing it
+
+---
+
+## TDD Enforcement (when enabled)
 
 | Test Type   | When to Use                  | Speed  |
 | ----------- | ---------------------------- | ------ |
@@ -341,25 +312,13 @@ When TDD is enabled, for each implementation unit:
 | Integration | Multiple components + DB/API | Medium |
 | E2E         | Full user flows              | Slow   |
 
-### Test Step
+For each implementation step in TDD mode:
 
-1. Identify test type for this unit
-2. Write test file for this functionality
-3. Run tests - they MUST fail (red)
-4. Log: "Tests written: [file], Type: [Unit/Integration/E2E], Status: 🔴 Red"
-
-### Implement Step
-
-1. Write minimum code to pass tests
-2. Run tests - they MUST pass (green)
-3. Log: "Implementation complete, Status: 🟢 Green"
-4. Refactor if needed (keep green)
-
-### Verify
-
-Always show test output after implementation.
-
-For E2E tests, check if user has Playwright configured and use browser testing.
+1. Write test file first
+2. Run tests - must FAIL (red)
+3. Implement minimum code to pass
+4. Run tests - must PASS (green)
+5. Refactor if needed
 
 ---
 
@@ -371,11 +330,6 @@ Before ANY code generation:
 2. Check `tech-context.md` - use correct deps/versions
 3. Match existing code style
 
-If deviating from patterns:
-
-1. Add to Decisions table with rationale
-2. Note in blueprint Log with reason
-
 ---
 
 ## Interruption Handling
@@ -383,31 +337,5 @@ If deviating from patterns:
 If user needs to stop mid-step:
 
 1. Save progress to blueprint Log section
-2. Note exactly where work stopped
-3. Add any open questions to Blockers section
-4. Update Metrics with partial time
-5. Respond: "Progress saved. Run `/mb/feature` to resume anytime."
-
----
-
-## Error Recovery
-
-If something goes wrong during implementation:
-
-1. Add to Blockers section: `🚧 Blocked: [description]`
-2. Log the error in current step
-3. Suggest next actions:
-   - Research the issue
-   - Try alternative approach
-   - Ask for help
-
----
-
-## Best Practices
-
-1. **Keep steps small** - 30 min max per step
-2. **Log everything** - Future you will thank present you
-3. **Resolve blockers early** - Don't carry them across sessions
-4. **Update confidence** - As you learn, upgrade 🔴 → 🟡 → 🟢
-5. **Celebrate progress** - Each checked box is a win ✅
-   ENDOFFILE
+2. Note where work stopped
+3. Respond: "Progress saved. Run `/mb/feature` to resume."
