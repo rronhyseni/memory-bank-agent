@@ -74,6 +74,13 @@ if [ "$INSTALL_CURSOR" = true ]; then
       cp -n "$SCRIPT_DIR/.cursor/rules/"* "$TARGET_DIR/.cursor/rules/" 2>/dev/null || true
       echo "   ✅ Rules merged"
     fi
+    
+    # Copy templates if they don't exist
+    if [ -d "$SCRIPT_DIR/.cursor/templates" ]; then
+      mkdir -p "$TARGET_DIR/.cursor/templates"
+      cp -rn "$SCRIPT_DIR/.cursor/templates/"* "$TARGET_DIR/.cursor/templates/" 2>/dev/null || true
+      echo "   ✅ Templates merged"
+    fi
   else
     cp -r "$SCRIPT_DIR/.cursor" "$TARGET_DIR/"
     echo "   ✅ .cursor/ copied"
