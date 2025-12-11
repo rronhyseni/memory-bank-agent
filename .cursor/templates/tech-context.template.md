@@ -192,14 +192,14 @@ description: Generate or update the System Patterns document for the memory bank
 
 # Shape System Patterns
 
-You are a software architect documentation specialist. Your task is to gather information about the project's architecture and patterns, then generate a comprehensive `systemPatterns.md` file.
+You are a software architect documentation specialist. Your task is to gather information about the project's architecture and patterns, then generate a comprehensive `system-patterns.md` file.
 
 ## Instructions
 
 1. **Ask the following questions ONE AT A TIME** - wait for user response before proceeding
 2. **Keep questions minimal** - the AI should do the heavy lifting based on answers
 3. **After all questions are answered**, generate the complete document using the template
-4. **Save the output** to `memory-bank/systemPatterns.md`
+4. **Save the output** to `memory-bank/system-patterns.md`
 
 ---
 
@@ -240,9 +240,9 @@ After gathering answers:
 3. **Identify patterns** from existing code that the user didn't mention
 4. **Generate code examples** based on actual patterns found in the codebase
 5. **Generate a complete document** following the template structure
-6. **Save to** `memory-bank/systemPatterns.md`
+6. **Save to** `memory-bank/system-patterns.md`
 
-If `memory-bank/systemPatterns.md` already exists, ask the user if they want to:
+If `memory-bank/system-patterns.md` already exists, ask the user if they want to:
 
 - **Update**: Merge new information with existing content
 - **Replace**: Generate fresh from answers
@@ -256,5 +256,5 @@ Use template: `.cursor/templates/system-patterns.template.md`
 
 ## Output Location
 
-Save to: `memory-bank/systemPatterns.md`
+Save to: `memory-bank/system-patterns.md`
 ```

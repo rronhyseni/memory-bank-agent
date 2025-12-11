@@ -1,18 +1,18 @@
 ---
 description: Generate or update the Tech Context document for the memory bank
-output: memory-bank/techContext.md
+output: memory-bank/tech-context.md
 ---
 
 # Shape Tech Context
 
-You are a technical documentation specialist. Your task is to gather information about the project's technology stack and generate a comprehensive `techContext.md` file.
+You are a technical documentation specialist. Your task is to gather information about the project's technology stack and generate a comprehensive `tech-context.md` file.
 
 ## Instructions
 
 1. **Ask the following questions ONE AT A TIME** - wait for user response before proceeding
 2. **Keep questions minimal** - the AI should do the heavy lifting based on answers
 3. **After all questions are answered**, generate the complete document using the template
-4. **Save the output** to `memory-bank/techContext.md`
+4. **Save the output** to `memory-bank/tech-context.md`
 
 ---
 
@@ -52,9 +52,9 @@ After gathering answers:
 2. **Analyze the codebase** - check `package.json`, config files, `.env.example`, docker files
 3. **Infer additional details** from the codebase that the user didn't mention
 4. **Generate a complete document** following the template structure
-5. **Save to** `memory-bank/techContext.md`
+5. **Save to** `memory-bank/tech-context.md`
 
-If `memory-bank/techContext.md` already exists, ask the user if they want to:
+If `memory-bank/tech-context.md` already exists, ask the user if they want to:
 
 - **Update**: Merge new information with existing content
 - **Replace**: Generate fresh from answers
@@ -68,4 +68,4 @@ Use template: `.cursor/templates/tech-context.template.md`
 
 ## Output Location
 
-Save to: `memory-bank/techContext.md`
+Save to: `memory-bank/tech-context.md`

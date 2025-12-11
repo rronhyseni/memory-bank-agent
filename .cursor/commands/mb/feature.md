@@ -29,10 +29,10 @@ First, check `memory-bank/features/active/` directory:
 
 Read these files to understand the project:
 
-- `memory-bank/projectBrief.md`
-- `memory-bank/systemPatterns.md`
-- `memory-bank/techContext.md`
-- `memory-bank/activeContext.md`
+- `memory-bank/project-brief.md`
+- `memory-bank/system-patterns.md`
+- `memory-bank/tech-context.md`
+- `memory-bank/active-context.md`
 
 #### Step 2: Gather Information
 
@@ -47,7 +47,7 @@ After they respond, ask these follow-ups (adapt based on their answer):
 > **Goal**: What does success look like? (one sentence)
 >
 > **Scope**: Does this touch existing code, or is it mostly new?
-> _(I see from systemPatterns you're using {{ARCHITECTURE_TYPE}})_
+> _(I see from system-patterns you're using {{ARCHITECTURE_TYPE}})_
 >
 > **Approach**: How do you want to build this?
 >
@@ -65,7 +65,7 @@ After gathering feature info, offer:
 > Would you like me to generate acceptance criteria based on:
 >
 > - Your description
-> - Similar patterns in `systemPatterns.md`
+> - Similar patterns in `system-patterns.md`
 > - Common edge cases for this type of feature
 >
 > □ Yes, generate suggestions
@@ -75,7 +75,7 @@ If yes, generate 3-5 acceptance criteria and show for approval/editing.
 
 #### Step 3: Scope Check
 
-If the feature description touches more than 3 major areas from `systemPatterns.md`:
+If the feature description touches more than 3 major areas from `system-patterns.md`:
 
 > This looks like a large feature touching multiple systems:
 >
@@ -161,7 +161,7 @@ On approval, update `progress.md` Roadmap table:
 
 On approval:
 
-1. Update `memory-bank/activeContext.md`:
+1. Update `memory-bank/active-context.md`:
    - Add: "## Current Feature\nWorking on: [Feature Name] - Step 1"
 2. Start executing Step 1
 3. After completing, update blueprint:
@@ -307,7 +307,7 @@ Update Metrics section in blueprint.
     [→ archive](./features/archive/YYYY-MM-DD-feature-name.md)
   ```
 
-**Update `activeContext.md`:**
+**Update `active-context.md`:**
 
 - Remove current feature section
 - Add note: "Completed [Feature Name] on [date]"
@@ -367,8 +367,8 @@ For E2E tests, check if user has Playwright configured and use browser testing.
 
 Before ANY code generation:
 
-1. Check `systemPatterns.md` - use established patterns
-2. Check `techContext.md` - use correct deps/versions
+1. Check `system-patterns.md` - use established patterns
+2. Check `tech-context.md` - use correct deps/versions
 3. Match existing code style
 
 If deviating from patterns:

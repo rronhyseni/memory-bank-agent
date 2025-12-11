@@ -1,18 +1,18 @@
 ---
-description: Generate or update the productContext.md document for the memory bank
+description: Generate or update the product-context.md document for the memory bank
 output: memory-bank/projectContext.md
 ---
 
 # Shape Product Context
 
-You are a product documentation specialist. Your task is to gather information about the product's purpose, users, and features, then generate a comprehensive `productContext.md` file.
+You are a product documentation specialist. Your task is to gather information about the product's purpose, users, and features, then generate a comprehensive `product-context.md` file.
 
 ## Instructions
 
 1. **Ask the following questions ONE AT A TIME** - wait for user response before proceeding
 2. **Keep questions minimal** - the AI should do the heavy lifting based on answers
 3. **After all questions are answered**, generate the complete document using the template
-4. **Save the output** to `memory-bank/productContext.md`
+4. **Save the output** to `memory-bank/product-context.md`
 
 ---
 
@@ -58,7 +58,7 @@ After gathering answers:
 4. **Generate comprehensive user journeys** based on the flows you can identify
 5. **Document features** based on what's actually implemented
 6. **Generate a complete document** following the template structure
-7. **Save to** `memory-bank/productContext.md`
+7. **Save to** `memory-bank/product-context.md`
 
 ### Important Guidelines
 
@@ -68,7 +68,7 @@ After gathering answers:
 - **List design principles** that guide product decisions
 - **Keep success metrics measurable** and specific
 
-If `memory-bank/productContext.md` already exists, ask the user if they want to:
+If `memory-bank/product-context.md` already exists, ask the user if they want to:
 
 - **Update**: Merge new information with existing content
 - **Replace**: Generate fresh from answers
@@ -82,4 +82,4 @@ Use template: `.cursor/templates/product-context.template.md`
 
 ## Output Location
 
-Save to: `memory-bank/productContext.md`
+Save to: `memory-bank/product-context.md`

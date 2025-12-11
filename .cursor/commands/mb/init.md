@@ -11,11 +11,11 @@ This file defines a persistent memory system using Markdown files in `memory-ban
 
 ## Core Files
 
-- `projectBrief.md`: High-level scope, goals, requirements.
-- `productContext.md`: Users, problems, UX journeys.
-- `systemPatterns.md`: Architecture, patterns, decisions.
-- `techContext.md`: Stack, dependencies, constraints.
-- `activeContext.md`: Current tasks, notes.
+- `project-brief.md`: High-level scope, goals, requirements.
+- `product-context.md`: Users, problems, UX journeys.
+- `system-patterns.md`: Architecture, patterns, decisions.
+- `tech-context.md`: Stack, dependencies, constraints.
+- `active-context.md`: Current tasks, notes.
 - `progress.md`: Logs of done/pending.
 
 Always generate in Markdown with # Main Sections, ## Subsections, **Bold Keys**, numbered/bulleted lists. Reference other files for consistency.
@@ -56,25 +56,25 @@ When triggered:
 
    - Load `.cursor/commands/mb/shape-project-brief.md`
    - Follow its process (it will ask its own questions, but reuse project name, stack, architecture from Q1-Q4)
-   - Generate `memory-bank/projectBrief.md` using `.cursor/templates/project-brief.template.md`
+   - Generate `memory-bank/project-brief.md` using `.cursor/templates/project-brief.template.md`
 
    **Phase 2: Product Context**
 
    - Load `.cursor/commands/mb/shape-product-context.md`
    - Follow its process (ask its questions one at a time)
-   - Generate `memory-bank/productContext.md` using `.cursor/templates/product-context.template.md`
+   - Generate `memory-bank/product-context.md` using `.cursor/templates/product-context.template.md`
 
    **Phase 3: Tech Context**
 
    - Load `.cursor/commands/mb/shape-tech-context.md`
    - Follow its process (reuse stack info from Q3 when applicable)
-   - Generate `memory-bank/techContext.md` using `.cursor/templates/tech-context.template.md`
+   - Generate `memory-bank/tech-context.md` using `.cursor/templates/tech-context.template.md`
 
    **Phase 4: System Patterns**
 
    - Load `.cursor/commands/mb/shape-system-patterns.md`
    - Follow its process (reuse architecture info from Q4 when applicable)
-   - Generate `memory-bank/systemPatterns.md` using `.cursor/templates/system-patterns.template.md`
+   - Generate `memory-bank/system-patterns.md` using `.cursor/templates/system-patterns.template.md`
 
 4. **Initialize Active Context & Progress**:
 
@@ -83,7 +83,7 @@ When triggered:
    **Active Context**:
 
    - Read `.cursor/templates/active-context.template.md`
-   - Create `memory-bank/activeContext.md` with an initial entry:
+   - Create `memory-bank/active-context.md` with an initial entry:
      - Current timestamp (date and time)
      - Task: "Memory bank initialized"
      - Summary: "All core memory-bank documentation files have been created."
@@ -94,7 +94,7 @@ When triggered:
 
    - Create `memory-bank/progress.md` with initial entry:
      - Current date
-     - Entry: "Memory bank bootstrapped - created projectBrief.md, productContext.md, techContext.md, systemPatterns.md, activeContext.md, and progress.md"
+     - Entry: "Memory bank bootstrapped - created project-brief.md, product-context.md, tech-context.md, system-patterns.md, active-context.md, and progress.md"
 
 5. **Validation Step**:
 
@@ -102,11 +102,11 @@ When triggered:
 
    - **Check file existence**: Verify all 6 files exist in `memory-bank/`:
 
-     - `projectBrief.md`
-     - `productContext.md`
-     - `techContext.md`
-     - `systemPatterns.md`
-     - `activeContext.md`
+     - `project-brief.md`
+     - `product-context.md`
+     - `tech-context.md`
+     - `system-patterns.md`
+     - `active-context.md`
      - `progress.md`
 
    - **Check completeness**: For each file, verify:
@@ -120,7 +120,7 @@ When triggered:
      - Project name matches across files
      - Tech stack mentioned consistently
      - Architecture type aligns across documents
-     - User types mentioned in productContext align with goals in projectBrief
+     - User types mentioned in product-context align with goals in project-brief
 
    - **Surface issues**:
 
@@ -149,8 +149,8 @@ When triggered:
 
 ## Related Commands
 
-- `/shape-project-brief`: Update projectBrief.md independently
-- `/shape-product-context`: Update productContext.md independently
-- `/shape-tech-context`: Update techContext.md independently
-- `/shape-system-patterns`: Update systemPatterns.md independently
-- `/update-active-context`: Update activeContext.md with current work focus
+- `/shape-project-brief`: Update project-brief.md independently
+- `/shape-product-context`: Update product-context.md independently
+- `/shape-tech-context`: Update tech-context.md independently
+- `/shape-system-patterns`: Update system-patterns.md independently
+- `/update-active-context`: Update active-context.md with current work focus
