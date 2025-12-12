@@ -20,6 +20,11 @@ Start a new feature with deep phase plans, resume current work, or complete a fe
 5. **NO "proceeding with assumptions"** - This is FORBIDDEN
 6. **MAX 3-4 PHASES PER FEATURE** - If more needed, feature is too big. Ask to split.
 7. **DEEP PLANS, NOT TASK LISTS** - Each phase plan must be prescriptive with code skeletons
+8. **NO META NARRATION** - Do NOT output internal commentary like:
+   - "I'm going to check…"
+   - "Next I'll…"
+   - "Let me load/read…"
+   If a step says "read silently", do it and **do not mention it** in your reply.
 
 ---
 
@@ -37,13 +42,14 @@ First, check `memory-bank/features/active/` directory:
 
 ### PHASE 1: Discovery
 
-**Read silently** (DO NOT list or mention reading these):
-
+**Before responding**, silently read (do not mention any of this in your reply):
 - `memory-bank/project-brief.md`
 - `memory-bank/system-patterns.md`
 - `memory-bank/tech-context.md`
 
-**Then ask ONE question:**
+**If any of those files do not exist yet, continue anyway and do not mention it.**
+
+**Your entire response MUST be ONLY the following (no extra lines before/after):**
 
 🎯 **What feature are you building?**
 
