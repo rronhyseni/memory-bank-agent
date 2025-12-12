@@ -12,6 +12,10 @@ When working on files in `memory-bank/features/`:
 
 1. **ALWAYS read these files first:**
 
+   - `memory-bank/project-brief.md` for scope and goals
+   - `memory-bank/product-context.md` for UX/product expectations
+   - `memory-bank/active-context.md` for current state and next steps
+   - `memory-bank/progress.md` for roadmap and “what exists already”
    - `memory-bank/features/active/[feature]/_index.md` - Feature overview
    - The current phase plan (e.g., `01-data-layer.plan.md`)
    - `memory-bank/system-patterns.md` for patterns
@@ -30,17 +34,20 @@ When working on files in `memory-bank/features/`:
 1. **One step at a time** - Complete and verify before moving on
 
 2. **Execute EXACTLY as specified** in the phase plan:
+
    - Use the code skeleton provided
    - Fill in only the TODO sections
    - Follow the patterns referenced
    - Avoid the anti-patterns listed
 
 3. **Update phase plan immediately** after each step:
+
    - Check the step's `[ ]` to `[x]`
    - Add entry to Implementation Log
    - Update any blockers encountered
 
 4. **For TDD steps:**
+
    - Write test FIRST (from skeleton)
    - Show test running and FAILING
    - Then implement (from skeleton)
@@ -68,7 +75,7 @@ Report format:
 ✅ Phase [P], Step [S] Complete
 
 **Done:** [What was accomplished]
-**Files:** 
+**Files:**
 - `path/to/file.ts`
 
 **Verified:** [verification command] → [result]
@@ -101,6 +108,7 @@ When completing the last step of a phase:
 - **NEVER refactor existing code** unless the step explicitly says to
 - **ALWAYS use existing utilities** from the codebase
 - **ALWAYS match existing code style** - Check similar files first
+- **ALWAYS keep behavior deterministic** - If there is ambiguity (e.g., which step is next), STOP and ask the user. Do not guess.
 
 ## Handling Ambiguity
 
@@ -118,6 +126,7 @@ After each step, update the phase plan:
 
 ```markdown
 ### Step N: [Name]
+
 - **Started:** [timestamp]
 - **Completed:** [timestamp]
 - **Notes:** [any decisions made or issues encountered]

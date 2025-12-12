@@ -5,6 +5,7 @@ Start a new feature with deep phase plans, resume current work, or complete a fe
 ## Usage
 
 - `/mb/feature` - Start new or resume current
+- `/mb/feature <feature description>` - Start new feature using the inline description (skips the "what feature" question)
 - `/mb/feature done` - Complete and archive current feature
 
 ---
@@ -12,6 +13,15 @@ Start a new feature with deep phase plans, resume current work, or complete a fe
 ## CRITICAL RULES FOR AI
 
 **YOU MUST FOLLOW THESE RULES ABSOLUTELY:**
+
+## IMPLICIT MEMORY BANK INCLUDE (FEATURE MODE DEFAULT)
+
+When `/mb/feature` is invoked, you MUST treat Memory Bank as included for this session:
+
+- Apply `.cursor/rules/memory-bank.mdc`
+- Apply `.cursor/rules/future-execution.mdc`
+
+**IMPORTANT:** Do NOT enable or enforce `.cursor/rules/core.mdc` (Plan/Act). Feature workflow gating (approve/stop-after-phase) is the source of truth.
 
 1. **ONE PHASE PER RESPONSE** - Complete only ONE phase, then STOP
 2. **NEVER ASSUME ANSWERS** - If you asked a question, WAIT for the user to answer
@@ -42,15 +52,33 @@ First, check `memory-bank/features/active/` directory:
 
 ### PHASE 1: Discovery
 
+#### Inline feature description shortcut (IMPORTANT)
+
+If the user invoked this command with an **inline description** (anything after `/mb/feature`, excluding `done`), you MUST:
+
+1. Treat that inline text as the user's answer to "What feature are you building?"
+2. **SKIP** the Phase 1 question prompt entirely
+3. Proceed directly to **PHASE 2: Clarifying Questions** and ask the questions in the format specified there
+
+Examples:
+
+- ✅ `/mb/feature Add a dark mode toggle to settings, persist per user`
+- ✅ `/mb/feature Build a CSV import flow for customers with validation + preview`
+- ❌ `/mb/feature` (no inline description → ask the Phase 1 question)
+- ✅ `/mb/feature done` (Mode C)
+
 **Before responding**, silently read (do not mention any of this in your reply):
 
 - `memory-bank/project-brief.md`
+- `memory-bank/product-context.md`
 - `memory-bank/system-patterns.md`
 - `memory-bank/tech-context.md`
+- `memory-bank/active-context.md`
+- `memory-bank/progress.md`
 
 **If any of those files do not exist yet, continue anyway and do not mention it.**
 
-**Your entire response MUST be ONLY the following (no extra lines before/after):**
+If there is **no inline description**, your entire response MUST be ONLY the following (no extra lines before/after):
 
 🎯 **What feature are you building?**
 
@@ -334,7 +362,16 @@ When all steps in a phase are complete:
 
 ### PHASE 1: Show Status
 
-Read `_index.md` in the active feature folder.
+Before responding, silently read (do not mention in your reply):
+
+- `memory-bank/project-brief.md`
+- `memory-bank/product-context.md`
+- `memory-bank/system-patterns.md`
+- `memory-bank/tech-context.md`
+- `memory-bank/active-context.md`
+- `memory-bank/progress.md`
+
+Then read `_index.md` in the active feature folder.
 
 > 📍 **Resuming: [Feature Name]**
 >
