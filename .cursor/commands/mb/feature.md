@@ -24,7 +24,7 @@ Start a new feature with deep phase plans, resume current work, or complete a fe
    - "I'm going to check…"
    - "Next I'll…"
    - "Let me load/read…"
-   If a step says "read silently", do it and **do not mention it** in your reply.
+   - If a step says "read silently", do it and **do not mention it** in your reply.
 
 ---
 
@@ -43,6 +43,7 @@ First, check `memory-bank/features/active/` directory:
 ### PHASE 1: Discovery
 
 **Before responding**, silently read (do not mention any of this in your reply):
+
 - `memory-bank/project-brief.md`
 - `memory-bank/system-patterns.md`
 - `memory-bank/tech-context.md`
@@ -61,7 +62,18 @@ Describe what it should do in your own words.
 
 ### PHASE 2: Clarifying Questions
 
-After user describes the feature, ask 3-4 targeted questions.
+After user describes the feature, ask **exactly 4 questions total**.
+
+These 4 questions must be **minimal**, but each should be **bundled** (cover multiple details) and **tailored to the specific feature**.
+
+**CRITICAL:**
+
+1. **No generic questions** - Each question must reference the user's feature and its concrete details (actors, inputs/outputs, integrations, constraints).
+2. **Do not proceed if unclear** - If the user's answers are ambiguous, conflicting, or incomplete, ask follow-up questions and stop. **Do NOT move to Phase 3** until uncertainty is resolved.
+3. **Ground in project patterns** - Shape questions using what you learn from:
+   - `memory-bank/system-patterns.md`
+   - `memory-bank/tech-context.md`
+   - `memory-bank/product-context.md`
 
 **Format:**
 
@@ -69,16 +81,25 @@ After user describes the feature, ask 3-4 targeted questions.
 
 Quick questions to nail the spec:
 
-1. **Success:** What is the ONE thing that must work for this to be "done"?
+1. **Success (one-liner):** What is the ONE thing that must work for this to be "done"?
 
-2. **Scope:** [Context-specific question based on their description and your reading of system-patterns.md]
+   - Include **who** uses it and **what outcome** they get.
 
-3. **Approach:** How do you want to build this?
-   - 🧪 **TDD** - Tests first, then code (recommended for logic-heavy features)
-   - 🚀 **Direct** - Code first, tests after (faster for UI/prototypes)
-   - ⚡ **Hybrid** - Tests for critical paths only
+2. **Scope + outputs:** What’s **in scope vs out of scope**, and what are the **exact outputs**?
 
-4. **Constraints:** Anything to avoid or must-use? (say "none" to skip)
+   - **Outputs**: which files should be created/updated (exact paths) and what must **never** be touched/overwritten.
+
+3. **Pattern alignment + constraints:** Which existing patterns in this repo should we mirror, and what constraints apply?
+
+   - Include at least **one reference file path** to match.
+   - Any must-use / must-avoid? Any backward-compat expectations?
+
+4. **Approach + verification:** How do you want to build this, and how do we verify it works?
+   - Pick one:
+     - 🧪 **TDD** - Tests first, then code (recommended for logic-heavy features)
+     - 🚀 **Direct** - Code first, tests after (faster for UI/prototypes)
+     - ⚡ **Hybrid** - Tests for critical paths only
+   - List **2-3 edge cases** + what you expect to see when it’s correct (commands/output).
 
 **⛔ STOP. Wait for user to answer ALL questions.**
 
@@ -86,9 +107,16 @@ Quick questions to nail the spec:
 
 ### PHASE 3: Phase Breakdown
 
-After user answers, propose the phase breakdown. **DO NOT create any files yet.**
+After user answers, first **check for uncertainty**.
+
+**If anything is unclear**, do NOT propose phases yet. Ask the minimum follow-up questions needed to remove ambiguity, then:
+
+**⛔ STOP. Wait for user.**
+
+Only when the spec is clear, propose the phase breakdown. **DO NOT create any files yet.**
 
 **Read templates:**
+
 - `.cursor/templates/_index.template.md`
 - `.cursor/templates/phase-plan.template.md`
 
@@ -96,34 +124,36 @@ After user answers, propose the phase breakdown. **DO NOT create any files yet.*
 
 > 📋 **Feature: [Feature Name]**
 >
-> **Goal:** [From their answer to question 1]
-> **Approach:** [TDD/Direct/Hybrid] [emoji]
+> **Goal:** [From their answer to question 1] > **Approach:** [TDD/Direct/Hybrid] [emoji]
 
 ---
 
 ### Proposed Phases
 
-| # | Phase | Focus | Steps (est.) |
-|---|-------|-------|--------------|
-| 1 | **[Phase Name]** | [What this phase accomplishes] | ~[3-5] |
-| 2 | **[Phase Name]** | [What this phase accomplishes] | ~[3-5] |
-| 3 | **[Phase Name]** | [What this phase accomplishes] | ~[3-5] |
+| #   | Phase            | Focus                          | Steps (est.) |
+| --- | ---------------- | ------------------------------ | ------------ |
+| 1   | **[Phase Name]** | [What this phase accomplishes] | ~[3-5]       |
+| 2   | **[Phase Name]** | [What this phase accomplishes] | ~[3-5]       |
+| 3   | **[Phase Name]** | [What this phase accomplishes] | ~[3-5]       |
 
 ---
 
 ### Phase Details Preview
 
 **Phase 1: [Name]**
+
 - Step 1: [Specific action with file path]
 - Step 2: [Specific action with file path]
 - Step 3: [Specific action with file path]
 
 **Phase 2: [Name]**
+
 - Step 1: [Specific action with file path]
 - Step 2: [Specific action with file path]
 - Step 3: [Specific action with file path]
 
 **Phase 3: [Name]**
+
 - Step 1: [Specific action with file path]
 - Step 2: [Specific action with file path]
 - Step 3: [Specific action with file path]
@@ -170,6 +200,7 @@ memory-bank/features/active/[feature-name-kebab-case]/
 Use `.cursor/templates/_index.template.md` structure.
 
 Fill in:
+
 - Feature overview
 - Phase table with links
 - Acceptance criteria
@@ -200,11 +231,13 @@ For EACH phase, create a deep plan file using `.cursor/templates/phase-plan.temp
 #### Step 4: Update Project Files
 
 1. **Update `memory-bank/progress.md`** - Add to Roadmap:
+
    ```
    | [next #] | [Feature Name] | 🔨 Active | [Approach] |
    ```
 
 2. **Update `memory-bank/active-context.md`** - Add:
+
    ```markdown
    ## Current Feature
 
@@ -219,6 +252,7 @@ For EACH phase, create a deep plan file using `.cursor/templates/phase-plan.temp
 > ✅ **Feature structure created!**
 >
 > 📁 `memory-bank/features/active/[name]/`
+>
 > - `_index.md` - Master overview
 > - `01-[phase].plan.md` - [Phase 1 name]
 > - `02-[phase].plan.md` - [Phase 2 name]
@@ -254,9 +288,7 @@ When user says "yes" or "continue":
 
 > ✅ **Phase [P], Step [S] Complete**
 >
-> **Done:** [What was accomplished]
-> **Files:** [Files created/modified]
-> **Verified:** [Verification result]
+> **Done:** [What was accomplished] > **Files:** [Files created/modified] > **Verified:** [Verification result]
 >
 > ---
 >
@@ -281,8 +313,8 @@ When all steps in a phase are complete:
 
 > 🎉 **Phase [P] Complete!**
 >
-> **Duration:** [Time]
-> **Files Created:**
+> **Duration:** [Time] > **Files Created:**
+>
 > - `path/to/file1.ts`
 > - `path/to/file2.ts`
 >
@@ -306,12 +338,12 @@ Read `_index.md` in the active feature folder.
 
 > 📍 **Resuming: [Feature Name]**
 >
-> | Status | Info |
-> |--------|------|
-> | Progress | Phase [P] of [T], Step [S] of [X] |
-> | Approach | [TDD/Direct/Hybrid] |
-> | Last done | [Last completed step] |
-> | Next up | Phase [P], Step [S]: [Description] |
+> | Status    | Info                               |
+> | --------- | ---------------------------------- |
+> | Progress  | Phase [P] of [T], Step [S] of [X]  |
+> | Approach  | [TDD/Direct/Hybrid]                |
+> | Last done | [Last completed step]              |
+> | Next up   | Phase [P], Step [S]: [Description] |
 >
 > ---
 >
@@ -344,6 +376,7 @@ Based on user choice:
 ### PHASE 1: Verify
 
 Check `_index.md` for:
+
 - All phases marked ✅?
 - All acceptance criteria checked?
 
@@ -352,14 +385,17 @@ Check `_index.md` for:
 > ⚠️ **Not quite done yet:**
 >
 > **Missing phases:**
+>
 > - Phase [N]: [Status]
 >
 > **Missing acceptance criteria:**
+>
 > - [ ] [Criterion]
 >
 > ---
 >
 > Complete anyway?
+>
 > - **"yes, done"** - Archive as-is
 > - **"no"** - Continue working
 
@@ -370,6 +406,7 @@ Check `_index.md` for:
 ### PHASE 2: Archive
 
 1. **Add completion data** to `_index.md`:
+
    ```markdown
    ## Completion
 
@@ -379,33 +416,37 @@ Check `_index.md` for:
    ```
 
 2. **Move folder:**
+
    ```
    features/active/[name]/ → features/archive/[YYYY-MM-DD]-[name]/
    ```
 
 3. **Update `progress.md`:**
+
    - Change status from 🔨 Active to ✅ Done
    - Add to Completed Features section
 
 4. **Update `active-context.md`:**
+
    - Remove Current Feature section
 
 5. **Celebrate:**
 
 > 🎉 **Feature Complete: [Name]**
 >
-> | Metric | Value |
-> |--------|-------|
-> | Phases | [P]/[P] |
-> | Total Steps | [S] |
-> | Duration | ~[X]h [X]m |
-> | Approach | [TDD/Direct/Hybrid] |
+> | Metric      | Value               |
+> | ----------- | ------------------- |
+> | Phases      | [P]/[P]             |
+> | Total Steps | [S]                 |
+> | Duration    | ~[X]h [X]m          |
+> | Approach    | [TDD/Direct/Hybrid] |
 >
 > **Archived:** `features/archive/[date]-[name]/`
 >
 > ---
 >
 > Whats next?
+>
 > - `/mb/feature` - Start another feature
 > - `/mb/update-active-context` - Update project context
 
@@ -420,14 +461,16 @@ When creating phase plans, follow these rules to ensure low-tier models can exec
 ### 1. Code Skeletons Must Be Prescriptive
 
 **BAD (Too Vague):**
+
 ```
 Create a user model with name and email fields.
 ```
 
 **GOOD (Prescriptive):**
+
 ```typescript
 // File: src/models/user.ts
-import { z } from "zod"
+import { z } from 'zod';
 
 export const UserSchema = z.object({
   id: z.string().uuid(),
@@ -435,9 +478,9 @@ export const UserSchema = z.object({
   email: z.string().email(),
   createdAt: z.date(),
   updatedAt: z.date(),
-})
+});
 
-export type User = z.infer<typeof UserSchema>
+export type User = z.infer<typeof UserSchema>;
 
 // TODO: Add createUser function that:
 // 1. Validates input with UserSchema.omit({ id, createdAt, updatedAt })
@@ -446,7 +489,7 @@ export type User = z.infer<typeof UserSchema>
 // 4. Returns User object
 export const createUser = (input: unknown): User => {
   // TODO: implement
-}
+};
 ```
 
 ### 2. Anti-Patterns Prevent Hallucination
@@ -466,25 +509,30 @@ Always include what NOT to do:
 
 Always point to existing code:
 
-```markdown
+````markdown
 ## Reference
 
 **Follow this pattern from `src/api/posts.ts`:**
+
 ```typescript
 export const getPosts = async (): Promise<Post[]> => {
   // This is how we structure API calls in this project
-}
+};
 ```
+````
 
 **Match this style for error handling.**
+
 ```
 
 ### 4. Verification Must Be Concrete
 
 **BAD:**
 ```
+
 Verify: Make sure it works
-```
+
+````
 
 **GOOD:**
 ```bash
@@ -494,7 +542,7 @@ yarn test src/models/user.test.ts
 
 yarn tsc --noEmit
 # Expected: No compilation errors
-```
+````
 
 ---
 
@@ -505,14 +553,14 @@ yarn tsc --noEmit
 Each implementation step follows Red-Green-Refactor:
 
 1. **Red:** Write failing test
-   > 📝 Creating test: `[test file path]`
-   > [Show test code from skeleton]
+
+   > 📝 Creating test: `[test file path]` > [Show test code from skeleton]
    > Running: `[test command]`
    > Expected: ❌ FAIL (test written, no implementation)
 
 2. **Green:** Write minimum code to pass
-   > 📝 Implementing: `[implementation file path]`
-   > [Show implementation code]
+
+   > 📝 Implementing: `[implementation file path]` > [Show implementation code]
    > Running: `[test command]`
    > Expected: ✅ PASS
 
@@ -522,8 +570,7 @@ Each implementation step follows Red-Green-Refactor:
 
 Execute step, then verify:
 
-> 📝 Creating: `[file path]`
-> [Show code]
+> 📝 Creating: `[file path]` > [Show code]
 > Verifying: [Build/lint/type-check command]
 > Result: ✅ Success
 
@@ -540,10 +587,12 @@ Execute step, then verify:
 If user says "pause", "stop", "later", "gtg":
 
 1. **Save progress:**
+
    - Ensure phase plan is updated with current step status
    - Add note to Implementation Log
 
 2. **Update `active-context.md`:**
+
    ```markdown
    ## Current Feature
 
@@ -569,17 +618,19 @@ If something fails during execution:
 
    > ❌ **Phase [P], Step [S] hit an issue**
    >
-   > **Error:** [What went wrong]
-   > **Likely cause:** [Your analysis]
+   > **Error:** [What went wrong] > **Likely cause:** [Your analysis]
    >
    > **Options:**
+   >
    > - **"fix"** - I will attempt to fix
    > - **"skip"** - Mark as blocked, continue to next step
    > - **"help"** - Lets troubleshoot together
 
 2. **Log the blocker** in phase plan:
+
    ```markdown
    ### Blockers
+
    - [ ] Step [S]: [Error description] - [timestamp]
    ```
 
@@ -588,6 +639,7 @@ If something fails during execution:
 ## REMEMBER
 
 ✅ **DO:**
+
 - Stop after each phase
 - Wait for explicit user input
 - Follow templates exactly
@@ -597,6 +649,7 @@ If something fails during execution:
 - Specify anti-patterns
 
 ❌ **DO NOT:**
+
 - Answer your own questions
 - Assume user approval
 - Skip phases
