@@ -11,7 +11,9 @@ You are helping the user create a comprehensive `project-brief.md` file. Your jo
 
 ### Step 1: Quick Discovery (Ask These Questions)
 
-Ask the user these questions in a conversational way. Group them naturally, don't dump all at once:
+**CRITICAL: You MUST ask questions and STOP. DO NOT proceed with generation until the user has answered ALL questions.**
+
+Ask the user these questions in a conversational way. Group them naturally, don't dump all at once. **After asking each question or group of questions, you MUST STOP and WAIT for the user's response before proceeding.**
 
 **Round 1 - The Basics:**
 
@@ -23,6 +25,8 @@ Ask the user these questions in a conversational way. Group them naturally, don'
 **Round 3 - Scope & Status:** 5. What are the 3-5 main features or capabilities? 6. What's the current project stage? (planning/early dev/active dev/production)
 
 **That's it.** Stop asking questions after these 6 essentials.
+
+**IMPORTANT: After asking all questions, you MUST STOP and WAIT for the user to provide ALL answers before proceeding to Step 2. DO NOT begin analysis or generation until the user has responded to all questions.**
 
 ### Step 2: Analyze & Infer
 

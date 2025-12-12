@@ -1,11 +1,11 @@
 ---
-description: Update the activeContext.md file for the memory bank with current session context
-output: memory-bank/activeContext.md
+description: Update the active-context.md file for the memory bank with current session context
+output: memory-bank/active-context.md
 ---
 
 # Update Active Context
 
-You are a project memory and context specialist. Your task is to keep `memory-bank/activeContext.md` up to date with the **current work focus, relevant background, and next steps**, so future sessions can quickly understand "what's going on" and "why".
+You are a project memory and context specialist. Your task is to keep `memory-bank/active-context.md` up to date with the **current work focus, relevant background, and next steps**, so future sessions can quickly understand "what's going on" and "why".
 
 ## Purpose
 
@@ -13,7 +13,7 @@ You are a project memory and context specialist. Your task is to keep `memory-ba
 - **Reduce AI "amnesia"**: provide a single, always-current place that explains recent work and decisions.
 - **Guide next steps**: record concrete next actions, open questions, and blockers.
 
-The end result should be an **updated `activeContext.md`** (created if missing) with a **clearly timestamped entry** describing the current focus.
+The end result should be an **updated `active-context.md`** (created if missing) with a **clearly timestamped entry** describing the current focus.
 
 ---
 
@@ -66,13 +66,13 @@ After gathering answers:
      - Modified/uncommitted files and their paths
    - Otherwise, infer relevant files/folders from recent edits and paths mentioned by the user.
 3. **Read the template** from `.cursor/templates/active-context.template.md`.
-4. **Read existing `memory-bank/activeContext.md` if it exists** to understand prior entries and avoid duplicating content.
+4. **Read existing `memory-bank/active-context.md` if it exists** to understand prior entries and avoid duplicating content.
 5. **Generate a new entry** using the template structure, filling in:
    - Current task/feature name and status
    - Short summary of what has been done and why it matters
    - Relevant background: branch, modified files, related memory-bank docs, project structure
    - Next steps / to-dos / open questions / blockers as a short checklist.
-6. **Update `activeContext.md`**:
+6. **Update `active-context.md`**:
    - If the file **does not exist**, create it using the template with a single, current entry.
    - If the file **already exists**, **prepend or append a new timestamped entry** (most recent context should be easiest to find at the top), preserving previous history.
 7. **Keep the writing concise and scannable**:
@@ -96,4 +96,4 @@ Use template: `.cursor/templates/active-context.template.md`
 
 ## Output Location
 
-Save to: `memory-bank/activeContext.md`
+Save to: `memory-bank/active-context.md`

@@ -1,0 +1,141 @@
+---
+description: Rules for executing feature phase plans
+globs: ['memory-bank/features/**/*.md', 'memory-bank/features/**/*.plan.md']
+alwaysApply: false
+---
+
+# Phase Plan Execution Rules
+
+When working on files in `memory-bank/features/`:
+
+## Before Writing ANY Code
+
+1. **ALWAYS read these files first:**
+
+   - `memory-bank/project-brief.md` for scope and goals
+   - `memory-bank/product-context.md` for UX/product expectations
+   - `memory-bank/active-context.md` for current state and next steps
+   - `memory-bank/progress.md` for roadmap and “what exists already”
+   - `memory-bank/features/active/[feature]/_index.md` - Feature overview
+   - The current phase plan (e.g., `01-data-layer.plan.md`)
+   - `memory-bank/system-patterns.md` for patterns
+   - `memory-bank/tech-context.md` for tech stack
+
+2. **NEVER invent new patterns** - Use existing ones from system-patterns.md
+
+3. **MATCH existing code style** - Check similar files in the project
+
+4. **Follow the code skeleton** - The plan provides 70% of the code, fill in the TODOs
+
+5. **Check anti-patterns** - Each plan lists what NOT to do
+
+## During Execution
+
+1. **One step at a time** - Complete and verify before moving on
+
+2. **Execute EXACTLY as specified** in the phase plan:
+
+   - Use the code skeleton provided
+   - Fill in only the TODO sections
+   - Follow the patterns referenced
+   - Avoid the anti-patterns listed
+
+3. **Update phase plan immediately** after each step:
+
+   - Check the step's `[ ]` to `[x]`
+   - Add entry to Implementation Log
+   - Update any blockers encountered
+
+4. **For TDD steps:**
+
+   - Write test FIRST (from skeleton)
+   - Show test running and FAILING
+   - Then implement (from skeleton)
+   - Show test PASSING
+
+5. **Always run verification** - Use the exact command in the plan
+
+## Code Quality
+
+1. **Include error handling** - Do not just handle happy path
+
+2. **Add types** (if TypeScript) - No `any` types
+
+3. **Follow naming conventions** from system-patterns.md
+
+4. **Keep functions small** - Single responsibility
+
+5. **Match the skeleton** - Do not over-engineer beyond what is specified
+
+## After Each Step
+
+Report format:
+
+```
+✅ Phase [P], Step [S] Complete
+
+**Done:** [What was accomplished]
+**Files:**
+- `path/to/file.ts`
+
+**Verified:** [verification command] → [result]
+
+---
+
+**Next:** Phase [P], Step [S+1] - [Description]
+
+Continue? ("yes" / "pause" / "show plan")
+```
+
+Then **STOP and wait for user**.
+
+## Phase Transitions
+
+When completing the last step of a phase:
+
+1. Verify ALL phase acceptance criteria are met
+2. Update `_index.md`:
+   - Mark phase status as ✅ Done
+   - Update progress (e.g., "Phase 2/3")
+3. Add completion entry to phase plan log
+4. Report phase completion with summary
+
+## Critical Rules
+
+- **NEVER skip steps** - Execute in order
+- **NEVER modify code outside the plan scope** - Only touch files mentioned
+- **NEVER add dependencies** unless specified in the plan
+- **NEVER refactor existing code** unless the step explicitly says to
+- **ALWAYS use existing utilities** from the codebase
+- **ALWAYS match existing code style** - Check similar files first
+- **ALWAYS keep behavior deterministic** - If there is ambiguity (e.g., which step is next), STOP and ask the user. Do not guess.
+
+## Handling Ambiguity
+
+If a step is unclear:
+
+1. **Check the Reference section** in the phase plan
+2. **Look at similar code** mentioned in the plan
+3. **Ask the user** - Do not guess
+
+Never proceed with assumptions. The plan should be clear enough that even a low-tier model can execute it.
+
+## Updating Plans
+
+After each step, update the phase plan:
+
+```markdown
+### Step N: [Name]
+
+- **Started:** [timestamp]
+- **Completed:** [timestamp]
+- **Notes:** [any decisions made or issues encountered]
+```
+
+## Error Recovery
+
+If something fails:
+
+1. Log the error in the plan's Blockers section
+2. Report to user with options
+3. Wait for instruction - do not try to auto-fix

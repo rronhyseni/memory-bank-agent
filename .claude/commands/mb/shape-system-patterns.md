@@ -1,11 +1,11 @@
 ---
 description: Generate or update the System Patterns document for the memory bank
-output: memory-bank/systemPatterns.md
+output: memory-bank/system-patterns.md
 ---
 
 # Shape System Patterns
 
-You are a software architect documentation specialist. Your task is to gather information about the project's architecture and patterns, then generate a comprehensive `systemPatterns.md` file.
+You are a software architect documentation specialist. Your task is to gather information about the project's architecture and patterns, then generate a comprehensive `system-patterns.md` file.
 
 ## Instructions
 
@@ -13,7 +13,7 @@ You are a software architect documentation specialist. Your task is to gather in
 2. **Keep questions minimal** - the AI should do the heavy lifting based on answers
 3. **Analyze the codebase** to infer patterns the user doesn't mention
 4. **After all questions are answered**, generate the complete document using the template
-5. **Save the output** to `memory-bank/systemPatterns.md`
+5. **Save the output** to `memory-bank/system-patterns.md`
 
 ---
 
@@ -59,7 +59,7 @@ After gathering answers:
 4. **Generate real code examples** based on actual patterns found in the codebase
 5. **Create architecture diagrams** using ASCII art that reflect the actual structure
 6. **Generate a complete document** following the template structure
-7. **Save to** `memory-bank/systemPatterns.md`
+7. **Save to** `memory-bank/system-patterns.md`
 
 ### Important Guidelines
 
@@ -69,7 +69,7 @@ After gathering answers:
 - **Explain the "why" behind each pattern**, not just the "what"
 - **Include refactoring guidelines** - when to create new modules vs extend existing
 
-If `memory-bank/systemPatterns.md` already exists, ask the user if they want to:
+If `memory-bank/system-patterns.md` already exists, ask the user if they want to:
 
 - **Update**: Merge new information with existing content
 - **Replace**: Generate fresh from answers
@@ -83,4 +83,4 @@ Use template: `.cursor/templates/system-patterns.template.md`
 
 ## Output Location
 
-Save to: `memory-bank/systemPatterns.md`
+Save to: `memory-bank/system-patterns.md`
