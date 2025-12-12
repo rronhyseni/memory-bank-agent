@@ -39,6 +39,7 @@ Navigate to your project root and run:
 - `~/memory-bank-agent/install` - Install `.cursor/` folder (Cursor IDE, default)
 - `~/memory-bank-agent/install --claude` - Install `.claude/` folder + `CLAUDE.md` (Claude Code)
 - `~/memory-bank-agent/install --all` - Install both (for projects using both IDEs)
+- `~/memory-bank-agent/install --overwrite` - Overwrite Memory Bank commands/rules/templates in an existing `.cursor/` setup (does **not** touch `memory-bank/` docs)
 
 **What gets installed:**
 

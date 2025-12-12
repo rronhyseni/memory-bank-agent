@@ -1,6 +1,6 @@
 #!/bin/bash
 # 🚀 Memory Bank Agent Installer v3
-# Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--claude|--all]
+# Run from ANY project directory: ~/memory-bank-agent/install [--cursor|--claude|--all] [--overwrite|--no-overwrite]
 # Copies .cursor/ and/or .claude/ folders + CLAUDE.md (for Claude Code)
 
 set -e
@@ -21,25 +21,57 @@ TARGET_DIR="$(pwd)"
 INSTALL_CURSOR=true
 INSTALL_CLAUDE=false
 
-# Parse arguments
-if [ "$1" = "--claude" ]; then
-  INSTALL_CURSOR=false
-  INSTALL_CLAUDE=true
-elif [ "$1" = "--all" ]; then
-  INSTALL_CURSOR=true
-  INSTALL_CLAUDE=true
-elif [ "$1" = "--cursor" ] || [ -z "$1" ]; then
-  INSTALL_CURSOR=true
-  INSTALL_CLAUDE=false
-else
-  echo "Usage: ~/memory-bank-agent/install [--cursor|--claude|--all]"
+# Overwrite behavior:
+# - "prompt": ask before overwriting Memory Bank setup inside existing .cursor/
+# - "yes": always overwrite
+# - "no": never overwrite (merge safely)
+OVERWRITE_MODE="prompt"
+
+print_usage() {
+  echo "Usage: ~/memory-bank-agent/install [--cursor|--claude|--all] [--overwrite|--no-overwrite]"
   echo ""
   echo "Options:"
-  echo "  --cursor  Copy .cursor/ folder only (default)"
-  echo "  --claude  Copy .claude/ folder only"
-  echo "  --all     Copy both .cursor/ and .claude/ folders"
-  exit 1
-fi
+  echo "  --cursor         Copy .cursor/ folder only (default)"
+  echo "  --claude         Copy .claude/ folder only"
+  echo "  --all            Copy both .cursor/ and .claude/ folders"
+  echo "  --overwrite      Overwrite Memory Bank commands/rules/templates in existing .cursor/"
+  echo "  --no-overwrite   Never overwrite, merge safely (skip existing files)"
+  echo "  --help           Show this help"
+}
+
+# Parse args (order-independent)
+for arg in "$@"; do
+  case "$arg" in
+    --cursor)
+      INSTALL_CURSOR=true
+      INSTALL_CLAUDE=false
+      ;;
+    --claude)
+      INSTALL_CURSOR=false
+      INSTALL_CLAUDE=true
+      ;;
+    --all)
+      INSTALL_CURSOR=true
+      INSTALL_CLAUDE=true
+      ;;
+    --overwrite|--force)
+      OVERWRITE_MODE="yes"
+      ;;
+    --no-overwrite)
+      OVERWRITE_MODE="no"
+      ;;
+    --help|-h)
+      print_usage
+      exit 0
+      ;;
+    "")
+      ;;
+    *)
+      print_usage
+      exit 1
+      ;;
+  esac
+done
 
 echo -e "${BLUE}🚀 Memory Bank Agent Installer${NC}"
 echo -e "   Source: ${SCRIPT_DIR}"
@@ -59,27 +91,69 @@ fi
 if [ "$INSTALL_CURSOR" = true ]; then
   echo -e "${GREEN}📁 Installing .cursor/ folder...${NC}"
   if [ -d "$TARGET_DIR/.cursor" ]; then
-    echo "   ⚠️  .cursor/ already exists, merging safely..."
-    
-    # Copy commands if they don't exist
-    if [ -d "$SCRIPT_DIR/.cursor/commands" ]; then
-      mkdir -p "$TARGET_DIR/.cursor/commands"
-      cp -rn "$SCRIPT_DIR/.cursor/commands/"* "$TARGET_DIR/.cursor/commands/" 2>/dev/null || true
-      echo "   ✅ Commands merged"
+    OVERWRITE=false
+    if [ "$OVERWRITE_MODE" = "yes" ]; then
+      OVERWRITE=true
+    elif [ "$OVERWRITE_MODE" = "no" ]; then
+      OVERWRITE=false
+    else
+      echo -e "   ${YELLOW}⚠️  .cursor/ already exists.${NC}"
+      echo "   This project may already have Memory Bank setup."
+      echo "   Overwrite Memory Bank setup with the latest version?"
+      echo "   (Overwrites ONLY: .cursor/commands/mb, .cursor/rules, .cursor/templates)"
+      echo "   (Does NOT touch: your project's memory-bank/ docs)"
+      read -r -p "   Overwrite? (y/N): " OVERWRITE_ANSWER
+      if [[ "$OVERWRITE_ANSWER" =~ ^[Yy]$ ]]; then
+        OVERWRITE=true
+      fi
     fi
+
+    if [ "$OVERWRITE" = true ]; then
+      echo "   ✅ Overwriting Memory Bank commands/rules/templates..."
+
+      # Overwrite commands (Memory Bank only)
+      if [ -d "$SCRIPT_DIR/.cursor/commands/mb" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/commands/mb"
+        cp -R "$SCRIPT_DIR/.cursor/commands/mb/"* "$TARGET_DIR/.cursor/commands/mb/" 2>/dev/null || true
+        echo "   ✅ Commands overwritten (.cursor/commands/mb)"
+      fi
+
+      # Overwrite rules
+      if [ -d "$SCRIPT_DIR/.cursor/rules" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/rules"
+        cp -R "$SCRIPT_DIR/.cursor/rules/"* "$TARGET_DIR/.cursor/rules/" 2>/dev/null || true
+        echo "   ✅ Rules overwritten"
+      fi
+
+      # Overwrite templates
+      if [ -d "$SCRIPT_DIR/.cursor/templates" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/templates"
+        cp -R "$SCRIPT_DIR/.cursor/templates/"* "$TARGET_DIR/.cursor/templates/" 2>/dev/null || true
+        echo "   ✅ Templates overwritten"
+      fi
+    else
+      echo "   ⚠️  .cursor/ already exists, merging safely..."
     
-    # Copy rules if they don't exist
-    if [ -d "$SCRIPT_DIR/.cursor/rules" ]; then
-      mkdir -p "$TARGET_DIR/.cursor/rules"
-      cp -n "$SCRIPT_DIR/.cursor/rules/"* "$TARGET_DIR/.cursor/rules/" 2>/dev/null || true
-      echo "   ✅ Rules merged"
-    fi
+      # Copy commands if they don't exist
+      if [ -d "$SCRIPT_DIR/.cursor/commands" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/commands"
+        cp -rn "$SCRIPT_DIR/.cursor/commands/"* "$TARGET_DIR/.cursor/commands/" 2>/dev/null || true
+        echo "   ✅ Commands merged"
+      fi
     
-    # Copy templates if they don't exist
-    if [ -d "$SCRIPT_DIR/.cursor/templates" ]; then
-      mkdir -p "$TARGET_DIR/.cursor/templates"
-      cp -rn "$SCRIPT_DIR/.cursor/templates/"* "$TARGET_DIR/.cursor/templates/" 2>/dev/null || true
-      echo "   ✅ Templates merged"
+      # Copy rules if they don't exist
+      if [ -d "$SCRIPT_DIR/.cursor/rules" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/rules"
+        cp -n "$SCRIPT_DIR/.cursor/rules/"* "$TARGET_DIR/.cursor/rules/" 2>/dev/null || true
+        echo "   ✅ Rules merged"
+      fi
+    
+      # Copy templates if they don't exist
+      if [ -d "$SCRIPT_DIR/.cursor/templates" ]; then
+        mkdir -p "$TARGET_DIR/.cursor/templates"
+        cp -rn "$SCRIPT_DIR/.cursor/templates/"* "$TARGET_DIR/.cursor/templates/" 2>/dev/null || true
+        echo "   ✅ Templates merged"
+      fi
     fi
   else
     cp -r "$SCRIPT_DIR/.cursor" "$TARGET_DIR/"
